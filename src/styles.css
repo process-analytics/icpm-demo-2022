@@ -1,0 +1,91 @@
+body {
+  font-family: sans-serif;
+}
+footer {
+  float: right;
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+#bpmn-container {
+  /* use absolute values for height to ensure that the vertical diagram is not fully displayed when the page is opened. */
+  /* width is relative to the window size */
+  height: 80vh;
+  border-style: solid;
+  border-color: #b0b0b0;
+  border-width: 1px;
+  /* This ensures that the parts of the diagram outside of the container are not displayed. */
+  overflow: hidden;
+  background-color: white;
+}
+
+:root {
+  --color-highlight-happy: Green;
+  --color-highlight-violation-level1: red;
+  --color-highlight-violation-level2: orange;
+}
+
+.bpmn-type-activity.highlight-rule-violation > rect {
+  fill: var(--color-highlight-violation-level1) !important;
+  fill-opacity: 20% !important;
+  stroke: var(--color-highlight-violation-level1);
+}
+
+.bpmn-type-activity.highlight-happy-path > rect {
+  stroke: var(--color-highlight-happy) !important;
+  stroke-width: 4px;
+}
+
+/*pulse CSS */
+.bpmn-type-activity.pulse-rule-violation-level1 > rect {
+  animation-name: pulse-violation-level1;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+.bpmn-type-activity.pulse-rule-violation-level2 > rect {
+  animation-name: pulse-violation-level2;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pulse-violation-level1 {
+  0% {
+    fill: #ffffff;
+    stroke: var(--color-highlight-violation-level1);
+  }
+  50% {
+    fill: var(--color-highlight-violation-level1);
+  }
+}
+
+@keyframes pulse-violation-level2 {
+  0% {
+    fill: #ffffff;
+    stroke: var(--color-highlight-violation-level2);
+  }
+  50% {
+    fill: var(--color-highlight-violation-level2);
+  }
+}
+
+.bpmn-type-activity.pulse-happy > rect {
+  animation-name: pulse-happy-path;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+}
+
+@keyframes pulse-happy-path {
+  0% {
+    fill: #ffffff;
+    stroke: black;
+  }
+  50% {
+    fill: var(--color-highlight-happy);
+  }
+}
+
+.tippy-box[data-theme~="violation"] {
+  background-color: black;
+  color: yellow;
+}
