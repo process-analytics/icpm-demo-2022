@@ -81,3 +81,6 @@ function getTypeOf(elementId) {
   }
   return "flow";
 }
+
+export function hideHappyPath(bpmnVisualization) {
+}

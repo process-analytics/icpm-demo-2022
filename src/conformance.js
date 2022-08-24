@@ -147,3 +147,6 @@ export function createLinearGradient(bpmnVisualization) {
   )[0].htmlElement;
   activitySvgElement.children[0].setAttribute("fill", "url(#Gradient)");
 }
+
+export function hideConformanceData(bpmnVisualization) {
+}

@@ -1,8 +1,8 @@
 import { BpmnVisualization } from "bpmn-visualization";
 
 import diagramCollapsed from "./diagrams/EC-purchase-orders-collapsed.bpmn?raw";
-import { showHappyPath } from "./happy-path.js";
-import { showConformanceData, createLinearGradient } from "./conformance.js";
+import { showHappyPath, hideHappyPath } from "./happy-path.js";
+import { showConformanceData, createLinearGradient, hideConformanceData } from "./conformance.js";
 import {
   showComplianceRules,
   hideComplianceRules
@@ -28,12 +28,24 @@ const conformanceButton = document.getElementById("conformance_data");
 const complianceButton = document.getElementById("compliance_rules");
 
 happyPathButton.addEventListener("click", function () {
-  showHappyPath(bpmnVisualization);
+  if (happyPathButton.innerHTML === "Show happy path") {
+    happyPathButton.innerHTML = "Hide happy path";
+    showHappyPath(bpmnVisualization);
+  } else {
+    hideHappyPath();
+    happyPathButton.innerHTML = "Show happy path";
+  }
 });
 
 conformanceButton.addEventListener("click", function () {
-  showConformanceData(bpmnVisualization);
-  createLinearGradient(bpmnVisualization);
+  if (conformanceButton.innerHTML === "Show conformance data") {
+    conformanceButton.innerHTML = "Hide conformance data";
+    showConformanceData(bpmnVisualization);
+    createLinearGradient(bpmnVisualization);
+  } else {
+    hideConformanceData();
+    conformanceButton.innerHTML = "Show conformance data";
+  }
 });
 
 complianceButton.addEventListener("click", function () {
