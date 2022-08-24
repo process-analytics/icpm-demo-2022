@@ -66,6 +66,9 @@ gatewaysMap.set("Gateway_1ezcj46", "exclusiveGatewayJoin2");
 
 eventsMap.set("Event_0e43ncy", "Vendor creates invoice");
 
+/**
+ * @param {BpmnVisualization} bpmnVisualization
+ */
 export function showConformanceData(bpmnVisualization) {
   addOverlay("Activity_0ec8azh", "synchronous", "40", bpmnVisualization);
   addOverlay("Activity_0ec8azh", "logMove", "10", bpmnVisualization);
@@ -74,6 +77,12 @@ export function showConformanceData(bpmnVisualization) {
   createLinearGradient(bpmnVisualization);
 }
 
+/**
+ * @param {string} elementId
+ * @param {string} overlayType
+ * @param {string} label
+ * @param {BpmnVisualization} bpmnVisualization
+ */
 function addOverlay(elementId, overlayType, label, bpmnVisualization) {
   if (overlayType === "synchronous") {
     bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
@@ -96,6 +105,9 @@ function addOverlay(elementId, overlayType, label, bpmnVisualization) {
   }
 }
 
+/**
+ * @param {BpmnVisualization} bpmnVisualization
+ */
 function createLinearGradient(bpmnVisualization) {
   const svgElement = document.getElementsByTagName("svg")[0];
 
@@ -145,6 +157,9 @@ function createLinearGradient(bpmnVisualization) {
   activitySvgElement.children[0].setAttribute("fill", "url(#Gradient)");
 }
 
+/**
+ * @param {BpmnVisualization} bpmnVisualization
+ */
 export function hideConformanceData(bpmnVisualization) {
   const bpmnElementsRegistry = bpmnVisualization.bpmnElementsRegistry;
   bpmnElementsRegistry.removeAllOverlays("Activity_0ec8azh");

@@ -39,7 +39,9 @@ eventsMap.set("Event_07598zy", "endEvent");
 
   const happyPathElementWithOverlays = "Event_07598zy";
 
-
+/**
+ * @param {BpmnVisualization} bpmnVisualization
+ */
 export function showHappyPath(bpmnVisualization) {
   /*iterate over the elements in the happyPath
    apply css and add a delay so that we see the css applied
