@@ -24,13 +24,16 @@ const happyPathButton = document.getElementById("happy_path");
 const conformanceButton = document.getElementById("conformance_data");
 const complianceButton = document.getElementById("compliance_rules");
 
+let isHappyPathDisplayed = false;
 happyPathButton.addEventListener("click", function () {
-  if (happyPathButton.innerHTML === "Show happy path") {
-    happyPathButton.innerHTML = "Hide happy path";
+  if (!isHappyPathDisplayed) {
     showHappyPath(bpmnVisualization);
+    happyPathButton.innerHTML = "Hide happy path";
+    isHappyPathDisplayed = true;
   } else {
     hideHappyPath(bpmnVisualization);
     happyPathButton.innerHTML = "Show happy path";
+    isHappyPathDisplayed = false;
   }
 });
 

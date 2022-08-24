@@ -1,3 +1,5 @@
+import { BpmnVisualization } from "bpmn-visualization";
+
 const activitiesMap = new Map();
 const gatewaysMap = new Map();
 const eventsMap = new Map();
@@ -23,11 +25,10 @@ eventsMap.set("Event_1vogvxc", "startEvent");
 eventsMap.set("Event_0e43ncy", "Vendor creates invoice");
 eventsMap.set("Event_07598zy", "endEvent");
 
-export function showHappyPath(bpmnVisualization) {
-  /*start event --> SRM subprocess
-    --> vendor creates order item --> create purchase order item
-    --> Record goods receipt --> record invoice receipt --> clear invoice
-    --> end event */
+/*start event --> SRM subprocess
+  --> vendor creates order item --> create purchase order item
+  --> Record goods receipt --> record invoice receipt --> clear invoice
+  --> end event */
   const happyPath = [
     "Event_1vogvxc",
     "Flow_0i9hf3x",
@@ -36,6 +37,10 @@ export function showHappyPath(bpmnVisualization) {
     "Activity_0ec8azh"
   ];
 
+  const happyPathElementWithOverlays = "Event_07598zy";
+
+
+export function showHappyPath(bpmnVisualization) {
   /*iterate over the elements in the happyPath
    apply css and add a delay so that we see the css applied
    in a sequential manner*/
@@ -58,7 +63,7 @@ export function showHappyPath(bpmnVisualization) {
     }
   });
 
-  bpmnVisualization.bpmnElementsRegistry.addOverlays("Event_07598zy", {
+  bpmnVisualization.bpmnElementsRegistry.addOverlays(happyPathElementWithOverlays, {
     position: "middle-right",
     label: "⏳days \n mean: 10.1 \n median: 14.2",
     style: {
@@ -67,6 +72,20 @@ export function showHappyPath(bpmnVisualization) {
       stroke: { color: "Red", width: 0 }
     }
   });
+}
+
+/**
+ * @param {BpmnVisualization} bpmnVisualization 
+ */
+export function hideHappyPath(bpmnVisualization) {
+  bpmnVisualization.bpmnElementsRegistry.removeCssClasses(happyPath, [
+    "highlight-happy-path",
+    "pulse-happy",
+    "gateway-happy",
+    "growing-happy"
+  ]);
+  
+  bpmnVisualization.bpmnElementsRegistry.removeAllOverlays(happyPathElementWithOverlays)
 }
 
 function getTypeOf(elementId) {
@@ -80,7 +99,4 @@ function getTypeOf(elementId) {
     return "event";
   }
   return "flow";
-}
-
-export function hideHappyPath(bpmnVisualization) {
 }
