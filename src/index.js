@@ -1,6 +1,6 @@
-import * as bpmnvisu from "bpmn-visualization";
+import { BpmnVisualization } from "bpmn-visualization";
 
-import diagramCollapsed from "./diagrams/EC-purchase-orders-collapsed.bpmn";
+import diagramCollapsed from "./diagrams/EC-purchase-orders-collapsed.bpmn?raw";
 import { showHappyPath } from "./happy-path.js";
 import { showConformanceData, createLinearGradient } from "./conformance.js";
 import {
@@ -9,7 +9,7 @@ import {
 } from "./compliance-rules.js";
 
 // 'bpmn-visualization' API documentation: https://process-analytics.github.io/bpmn-visualization-js/api/index.html
-const bpmnVisualization = new bpmnvisu.BpmnVisualization({
+const bpmnVisualization = new BpmnVisualization({
   container: "bpmn-container",
   navigation: { enabled: true } // remove this line or set to false if you don't want to use Diagram Navigation
 });

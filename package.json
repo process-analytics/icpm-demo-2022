@@ -1,22 +1,21 @@
 {
   "name": "icpm-demo-2022",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "index.html",
   "scripts": {
-    "start": "parcel index.html --open",
-    "build": "parcel build index.html"
+    "start": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "animejs": "3.2.1",
     "bpmn-visualization": "0.26.0",
     "tippy.js": "6.3.7"
   },
-  "alias": {
-    "bpmn-visualization": "bpmn-visualization/dist/bpmn-visualization.esm.js"
-  },
   "devDependencies": {
-    "parcel-bundler": "1.12.5"
+    "vite": "~3.0.5"
   },
   "keywords": []
 }
