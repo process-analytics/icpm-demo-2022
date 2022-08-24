@@ -45,6 +45,9 @@ tippy.setDefaultProps({
   // moveTransition: 'transform 0.2s ease-out',
 });
 
+/**
+ * @param {BpmnVisualization} bpmnVisualization
+ */
 export function showComplianceRules(bpmnVisualization) {
   bpmnVisualization.bpmnElementsRegistry.addCssClasses(
     "Activity_0yabbur",
@@ -99,6 +102,10 @@ export function showComplianceRules(bpmnVisualization) {
   console.log(violActivityElt1);
 }
 
+/**
+ * @param {string} activityId
+ * @param {BpmnVisualization} bpmnVisualization
+ */
 function addRippleCircles(activityId, bpmnVisualization) {
   const svgHtmlElement = bpmnVisualization.bpmnElementsRegistry.getElementsByIds(
     activityId
@@ -202,6 +209,10 @@ function addRippleCircles(activityId, bpmnVisualization) {
   document.getElementById("myAnimation8").beginElement();*/
 }
 
+/**
+ * @param bpmnElements
+ * @param {BpmnVisualization} bpmnVisualization
+ */
 function addPopover(bpmnElements, bpmnVisualization) {
   registerBpmnElements(bpmnElements);
   // Set the cursor to mark the elements as clickable
