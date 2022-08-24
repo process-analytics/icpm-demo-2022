@@ -21,32 +21,67 @@ footer {
 
 :root {
   --color-highlight-happy: Green;
-  --color-highlight-violation-level1: red;
-  --color-highlight-violation-level2: orange;
+  --color-highlight-violation-level1: rgb(252, 3, 3);
+  --color-highlight-violation-level2: rgb(252, 86, 3);
+  --color-highlight-violation-level3: rgb(252, 144, 3);
 }
 
-.bpmn-type-activity.highlight-rule-violation > rect {
-  fill: var(--color-highlight-violation-level1) !important;
-  fill-opacity: 20% !important;
+/* ripple circles */
+.bpmn-type-activity.rule-violation > circle {
+  stroke-opacity: 0;
+  animation: pulse 2s linear infinite;
+}
+
+.bpmn-type-activity.rule-violation > circle.rp1 {
+  animation-delay: 0.5s;
+}
+.bpmn-type-activity.rule-violation > circle.rp2 {
+  animation-delay: 0.7s;
+}
+.bpmn-type-activity.rule-violation > circle.rp3 {
+  animation-delay: 0.9s;
+}
+@keyframes pulse {
+  0% {
+    stroke-opacity: 0.1;
+  }
+  50% {
+    stroke-opacity: 1;
+  }
+  100% {
+    stroke-opacity: 0.1;
+  }
+}
+
+/*.bpmn-type-activity.highlight-rule-violation-level1 > rect {
+  fill: var(--color-highlight-violation-level1);
+  fill-opacity: 20%;
   stroke: var(--color-highlight-violation-level1);
 }
 
-.bpmn-type-activity.highlight-happy-path > rect {
-  stroke: var(--color-highlight-happy) !important;
-  stroke-width: 4px;
+.bpmn-type-activity.highlight-rule-violation-level2 > rect {
+  fill: var(--color-highlight-violation-level2) !important;
+  fill-opacity: 20% !important;
+  stroke: var(--color-highlight-violation-level2);
 }
 
+.bpmn-type-activity.highlight-rule-violation-level3 > rect {
+  fill: var(--color-highlight-violation-level3) !important;
+  fill-opacity: 20% !important;
+  stroke: var(--color-highlight-violation-level3);
+}*/
+
 /*pulse CSS */
-.bpmn-type-activity.pulse-rule-violation-level1 > rect {
-  animation-name: pulse-violation-level1;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
+/*.bpmn-type-activity.pulse-rule-violation-level1 > rect {
+  animation: pulse-violation-level1 2s alternate infinite;
 }
 
 .bpmn-type-activity.pulse-rule-violation-level2 > rect {
-  animation-name: pulse-violation-level2;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
+  animation: pulse-violation-level2 2s alternate infinite;
+}
+
+.bpmn-type-activity.pulse-rule-violation-level3 > rect {
+  animation: pulse-violation-level3 2s alternate infinite;
 }
 
 @keyframes pulse-violation-level1 {
@@ -69,6 +104,32 @@ footer {
   }
 }
 
+@keyframes pulse-violation-level3 {
+  0% {
+    fill: #ffffff;
+    stroke: var(--color-highlight-violation-level3);
+  }
+  50% {
+    fill: var(--color-highlight-violation-level3);
+  }
+}*/
+
+.bpmn-type-activity.highlight-happy-path > rect {
+  stroke: var(--color-highlight-happy) !important;
+  stroke-width: 4px;
+}
+
+.bpmn-type-event.highlight-happy-path > ellipse {
+  stroke: var(--color-highlight-happy) !important;
+  stroke-width: 4px;
+}
+
+.bpmn-type-event.pulse-happy > ellipse {
+  animation-name: pulse-happy-path;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+}
+
 .bpmn-type-activity.pulse-happy > rect {
   animation-name: pulse-happy-path;
   animation-duration: 2s;
@@ -82,6 +143,47 @@ footer {
   }
   50% {
     fill: var(--color-highlight-happy);
+  }
+}
+
+.gateway-happy > path:nth-child(1) {
+  stroke: green;
+  stroke-width: 6px;
+  animation-name: grow;
+  animation-duration: 2s;
+  animation-timing-function: ease-in;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+}
+
+.growing-happy > path:nth-child(2) {
+  stroke: green;
+  stroke-width: 6px;
+  animation-name: grow;
+  animation-duration: 2s;
+  animation-timing-function: ease-in;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+}
+
+.growing-happy > path:nth-child(3) {
+  stroke: green;
+  fill: green;
+  stroke-width: 4px;
+  animation-name: grow;
+  animation-duration: 2s;
+  animation-timing-function: ease-in;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+}
+
+@keyframes grow {
+  from {
+    stroke-dashoffset: 100%;
+    stroke-dasharray: 100%;
+  }
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
