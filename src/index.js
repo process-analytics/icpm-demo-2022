@@ -2,11 +2,8 @@ import { BpmnVisualization } from "bpmn-visualization";
 
 import diagramCollapsed from "./diagrams/EC-purchase-orders-collapsed.bpmn?raw";
 import { showHappyPath, hideHappyPath } from "./happy-path.js";
-import { showConformanceData, createLinearGradient, hideConformanceData } from "./conformance.js";
-import {
-  showComplianceRules,
-  hideComplianceRules
-} from "./compliance-rules.js";
+import { showConformanceData, hideConformanceData } from "./conformance.js";
+import { showComplianceRules, hideComplianceRules } from "./compliance-rules.js";
 
 // 'bpmn-visualization' API documentation: https://process-analytics.github.io/bpmn-visualization-js/api/index.html
 const bpmnVisualization = new BpmnVisualization({
@@ -32,7 +29,7 @@ happyPathButton.addEventListener("click", function () {
     happyPathButton.innerHTML = "Hide happy path";
     showHappyPath(bpmnVisualization);
   } else {
-    hideHappyPath();
+    hideHappyPath(bpmnVisualization);
     happyPathButton.innerHTML = "Show happy path";
   }
 });
@@ -41,9 +38,8 @@ conformanceButton.addEventListener("click", function () {
   if (conformanceButton.innerHTML === "Show conformance data") {
     conformanceButton.innerHTML = "Hide conformance data";
     showConformanceData(bpmnVisualization);
-    createLinearGradient(bpmnVisualization);
   } else {
-    hideConformanceData();
+    hideConformanceData(bpmnVisualization);
     conformanceButton.innerHTML = "Show conformance data";
   }
 });
