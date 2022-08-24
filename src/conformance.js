@@ -43,33 +43,35 @@ const overlayConfigModelMove = {
   }
 };
 
+const activitiesMap = new Map();
+const gatewaysMap = new Map();
+const eventsMap = new Map();
+
+activitiesMap.set("Activity_0ec8azh", "SRM subprocess");
+activitiesMap.set("Activity_1t65hvk", "Create Purchase Order Item");
+activitiesMap.set("Activity_06cvihl", "Record Service Entry Sheet");
+activitiesMap.set("Activity_00vbm9s", "Record Goods Receipts");
+activitiesMap.set("Activity_1u4jwkv", "Record Invoice Receipt");
+activitiesMap.set("Activity_083jf01", "Remove Payment Block");
+activitiesMap.set("Activity_0yabbur", "Clear Invoice");
+
+gatewaysMap.set("Gateway_0xh0plz", "parallelGatewaySplit1");
+gatewaysMap.set("Gateway_0domayw", "parallelGatewayJoin1");
+gatewaysMap.set("Gateway_0apcz1e", "parallelGatewaySplit2");
+gatewaysMap.set("Gateway_01gpztl", "parallelGatewayJoin2");
+gatewaysMap.set("Gateway_08gf298", "exclusiveGatewaySplit1");
+gatewaysMap.set("Gateway_0jqn9hp", "exclusiveGatewayJoin1");
+gatewaysMap.set("Gateway_0a68dfj", "exclusiveGatewaySplit2");
+gatewaysMap.set("Gateway_1ezcj46", "exclusiveGatewayJoin2");
+
+eventsMap.set("Event_0e43ncy", "Vendor creates invoice");
+
 export function showConformanceData(bpmnVisualization) {
-  const activitiesMap = new Map();
-  const gatewaysMap = new Map();
-  const eventsMap = new Map();
-
-  activitiesMap.set("Activity_0ec8azh", "SRM subprocess");
-  activitiesMap.set("Activity_1t65hvk", "Create Purchase Order Item");
-  activitiesMap.set("Activity_06cvihl", "Record Service Entry Sheet");
-  activitiesMap.set("Activity_00vbm9s", "Record Goods Receipts");
-  activitiesMap.set("Activity_1u4jwkv", "Record Invoice Receipt");
-  activitiesMap.set("Activity_083jf01", "Remove Payment Block");
-  activitiesMap.set("Activity_0yabbur", "Clear Invoice");
-
-  gatewaysMap.set("Gateway_0xh0plz", "parallelGatewaySplit1");
-  gatewaysMap.set("Gateway_0domayw", "parallelGatewayJoin1");
-  gatewaysMap.set("Gateway_0apcz1e", "parallelGatewaySplit2");
-  gatewaysMap.set("Gateway_01gpztl", "parallelGatewayJoin2");
-  gatewaysMap.set("Gateway_08gf298", "exclusiveGatewaySplit1");
-  gatewaysMap.set("Gateway_0jqn9hp", "exclusiveGatewayJoin1");
-  gatewaysMap.set("Gateway_0a68dfj", "exclusiveGatewaySplit2");
-  gatewaysMap.set("Gateway_1ezcj46", "exclusiveGatewayJoin2");
-
-  eventsMap.set("Event_0e43ncy", "Vendor creates invoice");
-
   addOverlay("Activity_0ec8azh", "synchronous", "40", bpmnVisualization);
   addOverlay("Activity_0ec8azh", "logMove", "10", bpmnVisualization);
   addOverlay("Activity_0ec8azh", "modelMove", "10", bpmnVisualization);
+
+  createLinearGradient(bpmnVisualization);
 }
 
 function addOverlay(elementId, overlayType, label, bpmnVisualization) {
@@ -94,14 +96,11 @@ function addOverlay(elementId, overlayType, label, bpmnVisualization) {
   }
 }
 
-export function createLinearGradient(bpmnVisualization) {
+function createLinearGradient(bpmnVisualization) {
   const svgElement = document.getElementsByTagName("svg")[0];
 
   const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-  const gradient = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "linearGradient"
-  );
+  const gradient = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
 
   // Store an array of stop information for the `<linearGradient>`.
   const stops = [
@@ -142,8 +141,26 @@ export function createLinearGradient(bpmnVisualization) {
 
   svgElement.appendChild(defs);
 
-  const activitySvgElement = bpmnVisualization.bpmnElementsRegistry.getElementsByIds(
-    "Activity_0ec8azh"
-  )[0].htmlElement;
+  const activitySvgElement = bpmnVisualization.bpmnElementsRegistry.getElementsByIds("Activity_0ec8azh")[0].htmlElement;
   activitySvgElement.children[0].setAttribute("fill", "url(#Gradient)");
+}
+
+export function hideConformanceData(bpmnVisualization) {
+  const bpmnElementsRegistry = bpmnVisualization.bpmnElementsRegistry;
+  bpmnElementsRegistry.removeAllOverlays("Activity_0ec8azh");
+  bpmnElementsRegistry.removeAllOverlays("Activity_0ec8azh");
+  bpmnElementsRegistry.removeAllOverlays("Activity_0ec8azh");
+
+  deleteLinearGradient(bpmnVisualization);
+}
+
+function deleteLinearGradient(bpmnVisualization) {
+  const element = document.querySelector("svg > defs");
+  if(element) {
+    const parent = element.parentNode;
+    parent.removeChild(element);
+  }
+
+  const activitySvgElement = bpmnVisualization.bpmnElementsRegistry.getElementsByIds("Activity_0ec8azh")[0].htmlElement;
+  activitySvgElement.children[0].setAttribute("fill", "white");
 }

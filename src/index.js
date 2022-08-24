@@ -1,12 +1,9 @@
 import { BpmnVisualization } from "bpmn-visualization";
 
 import diagramCollapsed from "./diagrams/EC-purchase-orders-collapsed.bpmn?raw";
-import { showHappyPath } from "./happy-path.js";
-import { showConformanceData, createLinearGradient } from "./conformance.js";
-import {
-  showComplianceRules,
-  hideComplianceRules
-} from "./compliance-rules.js";
+import { showHappyPath, hideHappyPath } from "./happy-path.js";
+import { showConformanceData, hideConformanceData } from "./conformance.js";
+import { showComplianceRules, hideComplianceRules } from "./compliance-rules.js";
 
 // 'bpmn-visualization' API documentation: https://process-analytics.github.io/bpmn-visualization-js/api/index.html
 const bpmnVisualization = new BpmnVisualization({
@@ -27,13 +24,27 @@ const happyPathButton = document.getElementById("happy_path");
 const conformanceButton = document.getElementById("conformance_data");
 const complianceButton = document.getElementById("compliance_rules");
 
+let isHappyPathDisplayed = false;
 happyPathButton.addEventListener("click", function () {
-  showHappyPath(bpmnVisualization);
+  if (!isHappyPathDisplayed) {
+    showHappyPath(bpmnVisualization);
+    happyPathButton.innerHTML = "Hide happy path";
+    isHappyPathDisplayed = true;
+  } else {
+    hideHappyPath(bpmnVisualization);
+    happyPathButton.innerHTML = "Show happy path";
+    isHappyPathDisplayed = false;
+  }
 });
 
 conformanceButton.addEventListener("click", function () {
-  showConformanceData(bpmnVisualization);
-  createLinearGradient(bpmnVisualization);
+  if (conformanceButton.innerHTML === "Show conformance data") {
+    conformanceButton.innerHTML = "Hide conformance data";
+    showConformanceData(bpmnVisualization);
+  } else {
+    hideConformanceData(bpmnVisualization);
+    conformanceButton.innerHTML = "Show conformance data";
+  }
 });
 
 complianceButton.addEventListener("click", function () {
