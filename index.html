@@ -5,26 +5,30 @@
     <title>ICP demo 2022 based on BPI 2019</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="src/styles.css">
+    <!-- The documentation of Spectre CSS: https://github.com/picturepan2/spectre -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <script type="module" src="src/index.js"></script>
 </head>
 <body>
-<section>
-    <div>
-        <ul class="breadcrumb">
+<section class="container">
+    <div class="col-11 col-mx-auto">
+        <ul class="breadcrumb bg-gray">
             <li class="breadcrumb-item">
                 <a href="#" onclick="loadBpmnDiagram('main')">Purchase orders</a>
             </li>
         </ul>
-        <div id="main-bpmn-container" class="bpmn-container"></div>
-        <div id="secondary-bpmn-container" class="bpmn-container hide"></div>
-    </div>
+        <div class="column col-12 col-mx-auto">
+            <div id="main-bpmn-container" class="bpmn-container"></div>
+            <div id="secondary-bpmn-container" class="bpmn-container hide"></div>
+        </div>
 
-    <div id="panel" style="margin:auto; display: flex; flex-direction: column; align-items: center">
-        <button id="reset_all" style="width:50%; margin-top: 2rem">Reset</button>
-        <div style="width:50%; margin-top: 1rem; display: flex; flex-direction: row; justify-content: space-between">
-            <button id="conformance_data" style="width:30%">Show conformance data</button>
-            <button id="compliance_rules" style="width:30%">Show compliance rules</button>
-            <button id="happy_path" style="width:30%">Show happy path</button>
+        <div id="panel" style="margin:auto; display: flex; flex-direction: column; align-items: center">
+            <button id="reset_all" class="btn btn-error" style="width:50%; margin-top: 2rem">Reset</button>
+            <div style="width:50%; margin-top: 1rem; display: flex; flex-direction: row; justify-content: space-between">
+                <button id="conformance_data" class="btn" style="width:30%">Show conformance data</button>
+                <button id="compliance_rules" class="btn" style="width:30%">Show compliance rules</button>
+                <button id="happy_path" class="btn" style="width:30%">Show happy path</button>
+            </div>
         </div>
     </div>
 </section>
