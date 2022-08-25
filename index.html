@@ -9,15 +9,24 @@
 </head>
 <body>
 <section>
-<div id="bpmn-container"></div>
-<div id="panel" style="margin:auto; display: flex; flex-direction: column; align-items: center">
-    <button id="reset_all" style="width:50%; margin-top: 2rem">Reset</button>
-    <div style="width:50%; margin-top: 1rem; display: flex; flex-direction: row; justify-content: space-between">
-        <button id="conformance_data" style="width:30%">Show conformance data</button>
-        <button id="compliance_rules" style="width:30%">Show compliance rules</button>
-        <button id="happy_path" style="width:30%">Show happy path</button>
+    <div class="bg-gray">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#" onclick="loadBpmnDiagram('main')">Purchase orders</a>
+            </li>
+        </ul>
+        <div id="main-bpmn-container" class="column col-12 col-mx-auto bpmn-container"></div>
+        <div id="secondary-bpmn-container" class="column col-12 col-mx-auto bpmn-container hide"></div>
     </div>
-</div>
+
+    <div id="panel" style="margin:auto; display: flex; flex-direction: column; align-items: center">
+        <button id="reset_all" style="width:50%; margin-top: 2rem">Reset</button>
+        <div style="width:50%; margin-top: 1rem; display: flex; flex-direction: row; justify-content: space-between">
+            <button id="conformance_data" style="width:30%">Show conformance data</button>
+            <button id="compliance_rules" style="width:30%">Show compliance rules</button>
+            <button id="happy_path" style="width:30%">Show happy path</button>
+        </div>
+    </div>
 </section>
 </body>
 <footer></footer>
