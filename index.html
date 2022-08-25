@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <!-- Generated from the Vanilla Javascript template by codesandbox.io -->
 <html>
-  <head>
+<head>
     <title>ICP demo 2022 based on BPI 2019</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="src/styles.css">
     <script type="module" src="src/index.js"></script>
-  </head>
-  <body>
-    <div id="bpmn-container"></div>
-    <div id="panel">
-      <button id="conformance_data">
-        Show conformance data</button>
-        <button id="compliance_rules">
-          Show compliance rules</button>
-        <button id="happy_path">
-          Show happy path</button>
+</head>
+<body>
+<section>
+<div id="bpmn-container"></div>
+<div id="panel" style="margin:auto; display: flex; flex-direction: column; align-items: center">
+    <button id="reset_all" style="width:50%; margin-top: 2rem">Reset</button>
+    <div style="width:50%; margin-top: 1rem; display: flex; flex-direction: row; justify-content: space-between">
+        <button id="conformance_data" style="width:30%">Show conformance data</button>
+        <button id="compliance_rules" style="width:30%">Show compliance rules</button>
+        <button id="happy_path" style="width:30%">Show happy path</button>
     </div>
-    <footer></footer>
-  </body>
+</div>
+</section>
+</body>
+<footer></footer>
 </html>

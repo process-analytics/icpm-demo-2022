@@ -12,6 +12,12 @@ const state = {
  * @param {BpmnVisualization} bpmnVisualization
  */
 export function configureButtons(bpmnVisualization) {
+    document.getElementById("reset_all").addEventListener("click",  () => {
+        hideHappyPath(bpmnVisualization);
+        hideConformanceData(bpmnVisualization);
+        hideComplianceRules();
+    });
+
     addEventListener("happy_path", state.isHappyPathDisplayed, () => showHappyPath(bpmnVisualization), () => hideHappyPath(bpmnVisualization));
     addEventListener("conformance_data", state.isConformanceDisplayed, () => showConformanceData(bpmnVisualization), () => hideConformanceData(bpmnVisualization));
     addEventListener("compliance_rules", state.isComplianceDisplayed, () => showComplianceRules(bpmnVisualization), () => hideComplianceRules());
