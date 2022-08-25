@@ -21,10 +21,6 @@ footer {
   background-color: white;
 }
 
-.hide {
-  display: none;
-}
-
 :root {
   --color-highlight-happy: Green;
   --color-highlight-violation-level1: rgb(252, 3, 3);

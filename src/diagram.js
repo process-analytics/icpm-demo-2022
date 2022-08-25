@@ -21,13 +21,13 @@ export function loadBpmnDiagram(tabIndex) {
     switch(tabIndex) {
         case 'main':
             removeSectionInBreadcrumb();
-            mainBPMNContainerElt.classList.remove('hide');
-            secondaryBPMNContainerElt.classList.add('hide');
+            mainBPMNContainerElt.classList.remove('d-hide');
+            secondaryBPMNContainerElt.classList.add('d-hide');
             break;
         case 'secondary':
             addSectionInBreadcrumb();
-            mainBPMNContainerElt.classList.add('hide');
-            secondaryBPMNContainerElt.classList.remove('hide');
+            mainBPMNContainerElt.classList.add('d-hide');
+            secondaryBPMNContainerElt.classList.remove('d-hide');
 
             if(!secondaryBpmnDiagramIsAlreadyLoad) {
                 // Load secondary diagram. Need to have the container displayed
