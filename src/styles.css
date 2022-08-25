@@ -1,12 +1,10 @@
-body {
+html {
   font-family: sans-serif;
 }
 
 footer {
-  float: right;
   margin-top: 2rem;
   margin-right: 2rem;
-  font-style: italic;
 }
 
 .bpmn-container {
