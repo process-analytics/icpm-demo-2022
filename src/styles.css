@@ -1,16 +1,18 @@
 body {
   font-family: sans-serif;
 }
+
 footer {
   float: right;
-  margin-top: 0.75rem;
+  margin-top: 2rem;
+  margin-right: 2rem;
   font-style: italic;
 }
 
 .bpmn-container {
   /* use absolute values for height to ensure that the vertical diagram is not fully displayed when the page is opened. */
   /* width is relative to the window size */
-  height: 80vh;
+  height: 70vh;
   border-style: solid;
   border-color: #b0b0b0;
   border-width: 1px;
