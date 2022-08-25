@@ -10,7 +10,7 @@ export function addSectionInBreadcrumb() {
     aElt.setAttribute('href', '#');
     aElt.appendChild(document.createTextNode('SRM subprocess'));
 
-    let liElt = document.createElement('liElt');
+    let liElt = document.createElement('li');
     liElt.setAttribute('id', 'secondary-diagram');
     liElt.setAttribute('class', 'breadcrumb-item');
     liElt.appendChild(aElt);
