@@ -4,6 +4,9 @@ import collapsedDiagram from "./diagrams/EC-purchase-orders-collapsed.bpmn?raw";
 import { configureButtons } from "./buttons";
 import { loadBpmnDiagram } from "./diagram";
 
+// https://stackoverflow.com/questions/49338193/how-to-use-code-from-script-with-type-module
+window.loadBpmnDiagram = loadBpmnDiagram;
+
 // 'bpmn-visualization' API documentation: https://process-analytics.github.io/bpmn-visualization-js/api/index.html
 const mainBpmnVisualization = new BpmnVisualization({
   container: 'main-bpmn-container',

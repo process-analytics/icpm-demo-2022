@@ -14,7 +14,6 @@ export function loadBpmnDiagram(tabIndex) {
     if (currentView === tabIndex) {
         return;
     }
-    //document.querySelector("#main-bpmn-container")
 
     const mainBPMNContainerElt = document.getElementById('main-bpmn-container');
     const secondaryBPMNContainerElt = document.getElementById('secondary-bpmn-container');
