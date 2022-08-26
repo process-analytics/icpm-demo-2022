@@ -9,24 +9,30 @@
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <script type="module" src="src/index.js"></script>
 </head>
+<header class="mb-2">
+    <div class="col-12 text-justify">
+        <ul class="breadcrumb p-2">
+            <li class="breadcrumb-item">
+                <a href="#" onclick="loadBpmnDiagram('main')">Purchase orders</a>
+            </li>
+        </ul>
+       <div class="divider"/>
+    </div>
+</header>
 <body>
-<section class="container text-capitalize">
+<section class="container text-capitalize mt-2">
     <div class="columns col-11 col-mx-auto">
         <div class="col-12 text-justify">
-            <ul class="breadcrumb bg-gray s-rounded p-2 my-2" style="border: medium groove">
-                <li class="breadcrumb-item">
-                    <a href="#" onclick="loadBpmnDiagram('main')">Purchase orders</a>
-                </li>
-            </ul>
+            <h2 id="title">Purchase orders</h2>
         </div>
-        <div class="col-12">
+        <div class="col-12 mb-2">
             <div id="main-bpmn-container" class="bpmn-container s-rounded"></div>
             <div id="secondary-bpmn-container" class="bpmn-container s-rounded d-hide"></div>
         </div>
 
         <div id="panel" class="col-6 col-mx-auto d-flex" style="flex-direction: column; align-items: center">
-            <button id="reset_all" class="btn btn-error btn-lg btn-block" style="margin-top: 2rem">Reset</button>
-            <div class="col-12 d-flex" style="margin-top: 1rem; flex-direction: row; justify-content: space-between">
+            <button id="reset_all" class="btn btn-error btn-lg btn-block my-2">Reset</button>
+            <div class="col-12 d-flex my-2" style="flex-direction: row; justify-content: space-between">
                 <button id="conformance_data" class="btn" style="width:30%">Show conformance data</button>
                 <button id="compliance_rules" class="btn" style="width:30%">Show compliance rules</button>
                 <button id="happy_path" class="btn" style="width:30%">Show happy path</button>
@@ -35,5 +41,5 @@
     </div>
 </section>
 </body>
-<footer class="float-right text-italic"></footer>
+<footer class="float-right text-italic mt-2"></footer>
 </html>

@@ -17,17 +17,20 @@ export function loadBpmnDiagram(tabIndex) {
 
     const mainBPMNContainerElt = document.getElementById('main-bpmn-container');
     const secondaryBPMNContainerElt = document.getElementById('secondary-bpmn-container');
+    const titleElt = document.getElementById('title');
 
     switch(tabIndex) {
         case 'main':
             removeSectionInBreadcrumb();
             mainBPMNContainerElt.classList.remove('d-hide');
             secondaryBPMNContainerElt.classList.add('d-hide');
+            titleElt.innerText = "Purchase orders";
             break;
         case 'secondary':
             addSectionInBreadcrumb();
             mainBPMNContainerElt.classList.add('d-hide');
             secondaryBPMNContainerElt.classList.remove('d-hide');
+            titleElt.innerText = "SRM subprocess";
 
             if(!secondaryBpmnDiagramIsAlreadyLoad) {
                 // Load secondary diagram. Need to have the container displayed
