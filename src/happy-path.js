@@ -24,41 +24,11 @@ export function showHappyPath(bpmnVisualization) {
    apply css and add a delay so that we see the css applied in a sequential manner */
   happyPath.forEach((elementId, index) => {
     if (isActivity(elementId) || isEvent(elementId)) {
-      const element = document.querySelectorAll(`[data-bpmn-id="${elementId}"] > ${isActivity(elementId) ? 'rect' : 'ellipse'}`)[0];
-      element.setAttribute('animate-duration', `${index * 5}s`);
-      element.setAttribute('animate-delay', `${(index-1) * 5}s`);
-      element.style.setProperty('animate-duration', `${index * 5}s`);
-      element.style.setProperty('animate-delay', `${(index-1) * 5}s`);
-
       const styleElt = document.querySelector('head > style');
       styleElt.innerHTML = styleElt.innerHTML + `.bpmn-type-activity.animate-${elementId} > rect, .bpmn-type-event.testCssClass > ellipse { animation-duration: ${index * 5}s;\n` +
           `  animation-delay: ${(index-1) * 5}s; }`;
 
-
-/*
-      var style = document.createElement('style');
-      style.type = 'text/css';
-      style.innerHTML = '.cssClass { color: #F00; }';
-      document.getElementsByTagName('head')[0].appendChild(style);
-
-
-      document.getElementById('someElementId').className = 'cssClass';
-*/
-
-
-      /*      fill: #ffffff;
-            stroke: black;*/
-      element.addEventListener('animationend', (event) => {
-        event.stopPropagation();
-       // element.classList.remove("animate__animated", "animate__pulse", "animate__repeat-1");
-      }, {once: true});
-
-      // const element = document.querySelector(`[data-bpmn-id="${elementId}"] > rect, ellipse`);
-
      bpmnVisualization.bpmnElementsRegistry.addCssClasses(elementId, [ "highlight-happy-path", "pulse-happy", `animate-${elementId}`]);
-
-    //  bpmnVisualization.bpmnElementsRegistry.addCssClasses(elementId, ["highlight-happy-path", "animate__animated", "animate__pulse", "animate__repeat-1"]);
-
     } else if (isGateway(elementId)) {
       bpmnVisualization.bpmnElementsRegistry.addCssClasses(elementId, "gateway-happy");
     } else { //flow
@@ -89,6 +59,8 @@ export function hideHappyPath(bpmnVisualization) {
     "gateway-happy",
     "growing-happy"
   ]);
+
+  // TODO Delete `animate-${elementId}` from style head and from each element `animate-${elementId}`
 
   bpmnVisualization.bpmnElementsRegistry.removeAllOverlays(happyPathElementWithOverlays)
 }
