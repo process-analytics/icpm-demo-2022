@@ -30,10 +30,24 @@ export function showHappyPath(bpmnVisualization) {
       element.style.setProperty('animate-duration', `${index * 5}s`);
       element.style.setProperty('animate-delay', `${(index-1) * 5}s`);
 
-      console.log(element);
+      const styleElt = document.querySelector('head > style');
+      styleElt.innerHTML = styleElt.innerHTML + `.bpmn-type-activity.animate-${elementId} > rect, .bpmn-type-event.testCssClass > ellipse { animation-duration: ${index * 5}s;\n` +
+          `  animation-delay: ${(index-1) * 5}s; }`;
 
-/*      fill: #ffffff;
-      stroke: black;*/
+
+/*
+      var style = document.createElement('style');
+      style.type = 'text/css';
+      style.innerHTML = '.cssClass { color: #F00; }';
+      document.getElementsByTagName('head')[0].appendChild(style);
+
+
+      document.getElementById('someElementId').className = 'cssClass';
+*/
+
+
+      /*      fill: #ffffff;
+            stroke: black;*/
       element.addEventListener('animationend', (event) => {
         event.stopPropagation();
        // element.classList.remove("animate__animated", "animate__pulse", "animate__repeat-1");
@@ -41,7 +55,7 @@ export function showHappyPath(bpmnVisualization) {
 
       // const element = document.querySelector(`[data-bpmn-id="${elementId}"] > rect, ellipse`);
 
-     bpmnVisualization.bpmnElementsRegistry.addCssClasses(elementId, ["highlight-happy-path", "pulse-happy"]);
+     bpmnVisualization.bpmnElementsRegistry.addCssClasses(elementId, [ "highlight-happy-path", "pulse-happy", `animate-${elementId}`]);
 
     //  bpmnVisualization.bpmnElementsRegistry.addCssClasses(elementId, ["highlight-happy-path", "animate__animated", "animate__pulse", "animate__repeat-1"]);
 

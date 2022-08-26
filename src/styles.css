@@ -32,14 +32,12 @@ footer {
   --color-highlight-violation-level1: rgb(252, 3, 3);
   --color-highlight-violation-level2: rgb(252, 86, 3);
   --color-highlight-violation-level3: rgb(252, 144, 3);
-  --animate-duration: 5s;
-  --animation-fill-mode:both;
 }
 
 /* ripple circles */
 .bpmn-type-activity.rule-violation > circle {
   stroke-opacity: 0;
-  animation: pulse 2s linear infinite;
+  animation: pulse-rule-violation 2s linear infinite;
 }
 
 .bpmn-type-activity.rule-violation > circle.rp1 {
@@ -51,7 +49,7 @@ footer {
 .bpmn-type-activity.rule-violation > circle.rp3 {
   animation-delay: 0.9s;
 }
-@keyframes pulse {
+@keyframes pulse-rule-violation {
   0% {
     stroke-opacity: 0.1;
   }
@@ -140,13 +138,12 @@ footer {
 }
 
 .bpmn-type-activity.pulse-happy > rect, .bpmn-type-event.pulse-happy > ellipse {
-  animation-name: pulse;
+  animation-name: pulse-happy-path;
   animation-iteration-count: 1;
   animation-timing-function: ease-in-out;
 }
 
-/* Same name as animate.style */
-@keyframes pulse {
+@keyframes pulse-happy-path {
   0% {
     fill: #ffffff;
     stroke: black;
