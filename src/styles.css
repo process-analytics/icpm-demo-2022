@@ -32,6 +32,8 @@ footer {
   --color-highlight-violation-level1: rgb(252, 3, 3);
   --color-highlight-violation-level2: rgb(252, 86, 3);
   --color-highlight-violation-level3: rgb(252, 144, 3);
+  --animate-duration: 5s;
+  --animation-fill-mode:both;
 }
 
 /* ripple circles */
@@ -122,35 +124,35 @@ footer {
   }
 }*/
 
-.bpmn-type-activity.highlight-happy-path > rect {
+
+/*
+.animate__animated.animate__pulse {
+  --animate-duration: 2s;
+  --animate-delay: 0.9s;
+}
+*/
+
+
+.bpmn-type-activity.highlight-happy-path > rect, .bpmn-type-event.highlight-happy-path > ellipse {
   stroke: var(--color-highlight-happy) !important;
-  stroke-width: 4px;
+  stroke-width: .2rem;
+  fill: rgb(0, 128, 0, .2);
 }
 
-.bpmn-type-event.highlight-happy-path > ellipse {
-  stroke: var(--color-highlight-happy) !important;
-  stroke-width: 4px;
-}
-
-.bpmn-type-event.pulse-happy > ellipse {
-  animation-name: pulse-happy-path;
-  animation-duration: 2s;
+.bpmn-type-activity.pulse-happy > rect, .bpmn-type-event.pulse-happy > ellipse {
+  animation-name: pulse;
   animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
 }
 
-.bpmn-type-activity.pulse-happy > rect {
-  animation-name: pulse-happy-path;
-  animation-duration: 2s;
-  animation-iteration-count: 1;
-}
-
-@keyframes pulse-happy-path {
+/* Same name as animate.style */
+@keyframes pulse {
   0% {
     fill: #ffffff;
     stroke: black;
   }
   50% {
-    fill: var(--color-highlight-happy);
+     fill: rgb(0, 128, 0, .2);
   }
 }
 
