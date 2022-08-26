@@ -4,15 +4,17 @@ html {
 
 footer {
   margin-right: 2rem;
+  margin-top: 1.5rem;
 }
 
 .bpmn-container {
   /* use absolute values for height to ensure that the vertical diagram is not fully displayed when the page is opened. */
   /* width is relative to the window size */
-  height: 70vh;
+  height: calc(100vh - 16rem);
   border-style: solid;
-  border-color: #b0b0b0;
-  border-width: 1px;
+  border-color: #303742;
+  border-width: medium;
+  border-radius: .3rem;
   /* This ensures that the parts of the diagram outside of the container are not displayed. */
   overflow: hidden;
   background-color: white;
