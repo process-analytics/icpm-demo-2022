@@ -7,6 +7,13 @@ footer {
   margin-top: 1.5rem;
 }
 
+.btn {
+  /* Override class of Spectre CSS. To be declare after Spectre CSS to override it*/
+  overflow-wrap: break-word;
+  height: auto;
+  white-space: inherit;
+}
+
 .bpmn-container {
   /* use absolute values for height to ensure that the vertical diagram is not fully displayed when the page is opened. */
   /* width is relative to the window size */
