@@ -2,7 +2,7 @@ import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
 
 const registeredBpmnElements = new Map();
-const bpmnContainerElt = window.document.getElementById("bpmn-container");
+const bpmnContainerElt = window.document.getElementById("main-bpmn-container");
 
 // tippy global configuration
 tippy.setDefaultProps({
@@ -38,7 +38,7 @@ tippy.setDefaultProps({
   // inlinePositioning: true,
 
   // https://atomiks.github.io/tippyjs/v6/all-props/#interactive
-  interactive: true
+  interactive: true,
 
   // https://atomiks.github.io/tippyjs/v6/all-props/#movetransition
   // custom transition --> not needed
@@ -60,9 +60,10 @@ export function showComplianceRules(bpmnVisualization) {
   );
 
   //on click, show activities that are affected by the violation rule
-  const violActivityElt1 = bpmnVisualization.bpmnElementsRegistry.getElementsByIds(
-    "Activity_0yabbur"
-  )[0].htmlElement;
+  const violActivityElt1 =
+    bpmnVisualization.bpmnElementsRegistry.getElementsByIds(
+      "Activity_0yabbur"
+    )[0].htmlElement;
 
   violActivityElt1.children[0].onclick = () => {
     /*bpmnVisualization.bpmnElementsRegistry.addCssClasses(
@@ -107,9 +108,9 @@ export function showComplianceRules(bpmnVisualization) {
  * @param {BpmnVisualization} bpmnVisualization
  */
 function addRippleCircles(activityId, bpmnVisualization) {
-  const svgHtmlElement = bpmnVisualization.bpmnElementsRegistry.getElementsByIds(
-    activityId
-  )[0].htmlElement;
+  const svgHtmlElement =
+    bpmnVisualization.bpmnElementsRegistry.getElementsByIds(activityId)[0]
+      .htmlElement;
 
   var x = parseInt(svgHtmlElement.children[0].getAttribute("x"), 10);
   var y = parseInt(svgHtmlElement.children[0].getAttribute("y"), 10);
@@ -250,12 +251,12 @@ function addPopover(bpmnElements, bpmnVisualization) {
     // only check the "reference" rect for changes
     sticky: "reference",
     // only check the "popper" rect for changes
-    // sticky: 'popper',
+    //sticky: "popper",
 
     duration: 400,
     delay: [200, 400],
 
-    trigger: "click"
+    trigger: "click",
   });
 }
 
