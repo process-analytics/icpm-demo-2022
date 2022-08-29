@@ -37,7 +37,7 @@ footer {
 /* ripple circles */
 .bpmn-type-activity.rule-violation > circle {
   stroke-opacity: 0;
-  animation: pulse 2s linear infinite;
+  animation: pulse-rule-violation 2s linear infinite;
 }
 
 .bpmn-type-activity.rule-violation > circle.rp1 {
@@ -49,7 +49,7 @@ footer {
 .bpmn-type-activity.rule-violation > circle.rp3 {
   animation-delay: 0.9s;
 }
-@keyframes pulse {
+@keyframes pulse-rule-violation {
   0% {
     stroke-opacity: 0.1;
   }
@@ -122,76 +122,71 @@ footer {
   }
 }*/
 
-.bpmn-type-activity.highlight-happy-path > rect {
-  stroke: var(--color-highlight-happy) !important;
-  stroke-width: 4px;
-}
 
-.bpmn-type-event.highlight-happy-path > ellipse {
-  stroke: var(--color-highlight-happy) !important;
-  stroke-width: 4px;
-}
-
-.bpmn-type-event.pulse-happy > ellipse {
+.bpmn-type-activity.pulse-happy > rect, .bpmn-type-event.pulse-happy > ellipse {
   animation-name: pulse-happy-path;
-  animation-duration: 2s;
   animation-iteration-count: 1;
-}
-
-.bpmn-type-activity.pulse-happy > rect {
-  animation-name: pulse-happy-path;
   animation-duration: 2s;
-  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
 }
 
 @keyframes pulse-happy-path {
   0% {
-    fill: #ffffff;
-    stroke: black;
+    fill: rgb(0, 128, 0, .2);
+    stroke: white;
   }
   50% {
-    fill: var(--color-highlight-happy);
+    fill: white;
   }
+  100% {
+    stroke: var(--color-highlight-happy);
+    stroke-width: .3rem;
+  }
+}
+
+.gateway-happy > path, .growing-happy > path {
+  --stroke: var(--color-highlight-happy);
+  --stroke-width: .3rem;
+  --fillStart: white;
+  --fillEnd: white;
+  animation-name: grow;
+  animation-duration: 2s;
+  animation-timing-function: ease-in;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
 }
 
 .gateway-happy > path:nth-child(1) {
-  stroke: green;
-  stroke-width: 6px;
-  animation-name: grow;
-  animation-duration: 2s;
-  animation-timing-function: ease-in;
-  animation-iteration-count: 1;
-  animation-direction: normal;
+  --fillStart: rgb(0, 128, 0, .2);
+  --fillEnd: white;
 }
 
-.growing-happy > path:nth-child(2) {
-  stroke: green;
-  stroke-width: 6px;
-  animation-name: grow;
-  animation-duration: 2s;
-  animation-timing-function: ease-in;
-  animation-iteration-count: 1;
-  animation-direction: normal;
+.gateway-happy > path:nth-child(2) {
+  --stroke-width: .1rem;
+  --fillStart: var(--color-highlight-happy);
+  --fillEnd: var(--color-highlight-happy);
 }
 
 .growing-happy > path:nth-child(3) {
-  stroke: green;
-  fill: green;
-  stroke-width: 4px;
-  animation-name: grow;
-  animation-duration: 2s;
-  animation-timing-function: ease-in;
-  animation-iteration-count: 1;
-  animation-direction: normal;
+  --fillStart: var(--color-highlight-happy);
+  --fillEnd: var(--color-highlight-happy);
 }
 
 @keyframes grow {
   from {
     stroke-dashoffset: 100%;
     stroke-dasharray: 100%;
+    stroke: var(--stroke);
+    stroke-width: var(--stroke-width);
+    fill: var(--fillStart);
   }
   to {
     stroke-dashoffset: 0;
+    stroke: var(--stroke);
+    stroke-width: var(--stroke-width);
+    fill: var(--fillEnd);
   }
 }
 
