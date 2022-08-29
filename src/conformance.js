@@ -1,3 +1,4 @@
+import { ShapeBpmnElementKind } from "bpmn-visualization";
 const overlayConfigSynchronous = {
   style: {
     font: {
@@ -207,9 +208,27 @@ function createLinearGradient(
  */
 export function hideConformanceData(bpmnVisualization) {
   const bpmnElementsRegistry = bpmnVisualization.bpmnElementsRegistry;
-  bpmnElementsRegistry.removeAllOverlays("Activity_0ec8azh");
-  bpmnElementsRegistry.removeAllOverlays("Activity_0ec8azh");
-  bpmnElementsRegistry.removeAllOverlays("Activity_0ec8azh");
+  const bpmnTaskElements =
+    bpmnVisualization.bpmnElementsRegistry.getElementsByKinds(
+      ShapeBpmnElementKind.TASK
+    );
+  bpmnTaskElements.forEach((elt) => {
+    bpmnElementsRegistry.removeAllOverlays(elt.bpmnSemantic.id);
+  });
+  const bpmnSubprocessElements =
+    bpmnVisualization.bpmnElementsRegistry.getElementsByKinds(
+      ShapeBpmnElementKind.SUB_PROCESS
+    );
+  bpmnSubprocessElements.forEach((elt) => {
+    bpmnElementsRegistry.removeAllOverlays(elt.bpmnSemantic.id);
+  });
+  const bpmnEventElements =
+    bpmnVisualization.bpmnElementsRegistry.getElementsByKinds(
+      ShapeBpmnElementKind.EVENT_INTERMEDIATE_CATCH
+    );
+  bpmnEventElements.forEach((elt) => {
+    bpmnElementsRegistry.removeAllOverlays(elt.bpmnSemantic.id);
+  });
 
   deleteLinearGradient(bpmnVisualization);
 }
@@ -221,11 +240,12 @@ function deleteLinearGradient(bpmnVisualization) {
     parent.removeChild(element);
   }
 
-  const activitySvgElement =
+  /* const activitySvgElement =
     bpmnVisualization.bpmnElementsRegistry.getElementsByIds(
       "Activity_0ec8azh"
     )[0].htmlElement;
   activitySvgElement.children[0].setAttribute("fill", "white");
+  */
 }
 
 function computeRatioList(stopsFrequencyList) {
