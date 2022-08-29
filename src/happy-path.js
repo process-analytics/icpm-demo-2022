@@ -31,17 +31,17 @@ export function showHappyPath(bpmnVisualization) {
     let classToAdd;
 
     if (isActivity(elementId)) {
-      style.innerHTML = `.animate-${elementId} > rect { animation-delay: ${index * 2}s; }`;
+      style.innerHTML = `.animate-${elementId} > rect { animation-delay: ${index * 1.5}s; }`;
       classToAdd = "pulse-happy";
     } else if ( isEvent(elementId)) {
-      style.innerHTML = `.animate-${elementId} > ellipse { animation-delay: ${index * 2}s; }`;
+      style.innerHTML = `.animate-${elementId} > ellipse { animation-delay: ${index * 1.5}s; }`;
       classToAdd = "pulse-happy";
     } else if (isGateway(elementId)) {
-      style.innerHTML = `.animate-${elementId} > path { animation-delay: ${index * 2}s; }`;
+      style.innerHTML = `.animate-${elementId} > path { animation-delay: ${index * 1.5}s; }`;
       classToAdd = "gateway-happy";
     } else { // flow
-      style.innerHTML = `.animate-${elementId} > path:nth-child(2) { animation-delay: ${index * 2}s; animation-duration: 2s; } \n` +
-          `.animate-${elementId} > path:nth-child(3) { animation-delay: ${(index * 2) + 0.5}s; animation-duration: 1.5s; }`;
+      style.innerHTML = `.animate-${elementId} > path:nth-child(2) { animation-delay: ${index * 1.5}s; animation-duration: 2s; } \n` +
+          `.animate-${elementId} > path:nth-child(3) { animation-delay: ${index * 2}s; animation-duration: 0.5s; }`;
       classToAdd = "growing-happy";
     }
     headElt.appendChild(style);
