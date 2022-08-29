@@ -134,7 +134,7 @@ footer {
 .bpmn-type-activity.pulse-happy > rect, .bpmn-type-event.pulse-happy > ellipse {
   animation-name: pulse-happy-path;
   animation-iteration-count: 1;
-  animation-duration: 3s;
+  animation-duration: 2s;
   animation-timing-function: ease-in;
   animation-fill-mode: forwards;
 }
@@ -153,13 +153,13 @@ footer {
   }
 }
 
-.gateway-happy > path, .growing-happy > path:nth-child(2), .growing-happy > path:nth-child(3) {
+.gateway-happy > path, .growing-happy > path {
   --stroke: var(--color-highlight-happy);
   --stroke-width: .3rem;
   --fillStart: white;
   --fillEnd: white;
   animation-name: grow;
-  animation-duration: 3s;
+  animation-duration: 2s;
   animation-timing-function: ease-in;
   animation-iteration-count: 1;
   animation-direction: normal;

@@ -15,29 +15,36 @@ const happyPath = [
 
 const happyPathElementWithOverlays = "Event_07598zy";
 
-let styleElt;
-let styleState;
-window.addEventListener('load', function () {
-  styleElt = document.querySelector('head > style');
-  styleState = styleElt.innerHTML;
-})
-
 /**
  * @param {BpmnVisualization} bpmnVisualization
  */
 export function showHappyPath(bpmnVisualization) {
-  happyPath.forEach((elementId, index) => {
-    let childType = isActivity(elementId) ? 'rect' :
-        isEvent(elementId) ? 'ellipse' : 'path'; // flow & gateway
-
-    styleElt.innerHTML = styleElt.innerHTML + `\n.bpmn-type-activity.animate-${elementId} > ${childType} { animation-delay: ${(index) * 3}s; }`;
-  });
+  const headElt = document.getElementsByTagName('head')[0];
 
   /* iterate over the elements in the happyPath
    apply css and add a delay so that we see the css applied in a sequential manner */
   happyPath.forEach((elementId, index) => {
-    const classToAdd = isActivity(elementId) || isEvent(elementId) ? "pulse-happy" :
-        isGateway(elementId) ? "gateway-happy" : "growing-happy";
+    const style = document.createElement('style');
+    style.id = elementId;
+    style.type = 'text/css';
+
+    let classToAdd;
+
+    if (isActivity(elementId)) {
+      style.innerHTML = `.animate-${elementId} > rect { animation-delay: ${index * 2}s; }`;
+      classToAdd = "pulse-happy";
+    } else if ( isEvent(elementId)) {
+      style.innerHTML = `.animate-${elementId} > ellipse { animation-delay: ${index * 2}s; }`;
+      classToAdd = "pulse-happy";
+    } else if (isGateway(elementId)) {
+      style.innerHTML = `.animate-${elementId} > path { animation-delay: ${index * 2}s; }`;
+      classToAdd = "gateway-happy";
+    } else { // flow
+      style.innerHTML = `.animate-${elementId} > path:nth-child(2) { animation-delay: ${index * 2}s; animation-duration: 2s; } \n` +
+          `.animate-${elementId} > path:nth-child(3) { animation-delay: ${(index * 2) + 0.5}s; animation-duration: 1.5s; }`;
+      classToAdd = "growing-happy";
+    }
+    headElt.appendChild(style);
 
     bpmnVisualization.bpmnElementsRegistry.addCssClasses(elementId, [ classToAdd, `animate-${elementId}` ]);
   });
@@ -57,14 +64,16 @@ export function showHappyPath(bpmnVisualization) {
  * @param {BpmnVisualization} bpmnVisualization
  */
 export function hideHappyPath(bpmnVisualization) {
-  styleElt.innerHTML = styleState;
-
   bpmnVisualization.bpmnElementsRegistry.removeCssClasses(happyPath, [
     "highlight-happy-path",
     "pulse-happy",
     "gateway-happy",
     "growing-happy",
-    ...happyPath.map((elementId) => `animate-${elementId}`)
+    ...happyPath.map((elementId) => {
+      let styleOfElement = document.getElementById(elementId);
+      styleOfElement.parentNode.removeChild(styleOfElement);
+      return  `animate-${elementId}`
+    })
   ]);
 
   bpmnVisualization.bpmnElementsRegistry.removeAllOverlays(happyPathElementWithOverlays)
