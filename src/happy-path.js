@@ -1,68 +1,52 @@
 import { BpmnVisualization } from "bpmn-visualization";
-
-const activitiesMap = new Map();
-const gatewaysMap = new Map();
-const eventsMap = new Map();
-
-activitiesMap.set("Activity_0ec8azh", "SRM subprocess");
-activitiesMap.set("Activity_1t65hvk", "Create Purchase Order Item");
-activitiesMap.set("Activity_06cvihl", "Record Service Entry Sheet");
-activitiesMap.set("Activity_00vbm9s", "Record Goods Receipts");
-activitiesMap.set("Activity_1u4jwkv", "Record Invoice Receipt");
-activitiesMap.set("Activity_083jf01", "Remove Payment Block");
-activitiesMap.set("Activity_0yabbur", "Clear Invoice");
-
-gatewaysMap.set("Gateway_0xh0plz", "parallelGatewaySplit1");
-gatewaysMap.set("Gateway_0domayw", "parallelGatewayJoin1");
-gatewaysMap.set("Gateway_0apcz1e", "parallelGatewaySplit2");
-gatewaysMap.set("Gateway_01gpztl", "parallelGatewayJoin2");
-gatewaysMap.set("Gateway_08gf298", "exclusiveGatewaySplit1");
-gatewaysMap.set("Gateway_0jqn9hp", "exclusiveGatewayJoin1");
-gatewaysMap.set("Gateway_0a68dfj", "exclusiveGatewaySplit2");
-gatewaysMap.set("Gateway_1ezcj46", "exclusiveGatewayJoin2");
-
-eventsMap.set("Event_1vogvxc", "startEvent");
-eventsMap.set("Event_0e43ncy", "Vendor creates invoice");
-eventsMap.set("Event_07598zy", "endEvent");
+import { isActivity, isEvent, isGateway } from "./bpmnElements";
 
 /*start event --> SRM subprocess
   --> vendor creates order item --> create purchase order item
   --> Record goods receipt --> record invoice receipt --> clear invoice
   --> end event */
-  const happyPath = [
-    "Event_1vogvxc",
-    "Flow_0i9hf3x",
-    "Gateway_0xh0plz",
-    "Flow_06ca3ya",
-    "Activity_0ec8azh"
-  ];
+const happyPath = [
+  "Event_1vogvxc",
+  "Flow_0i9hf3x",
+  "Gateway_0xh0plz",
+  "Flow_06ca3ya",
+  "Activity_0ec8azh"
+];
 
-  const happyPathElementWithOverlays = "Event_07598zy";
+const happyPathElementWithOverlays = "Event_07598zy";
 
 /**
  * @param {BpmnVisualization} bpmnVisualization
  */
 export function showHappyPath(bpmnVisualization) {
-  /*iterate over the elements in the happyPath
-   apply css and add a delay so that we see the css applied
-   in a sequential manner*/
-  happyPath.forEach((elementId) => {
-    const elementType = getTypeOf(elementId);
-    if (elementType === "activity" || elementType === "event") {
-      bpmnVisualization.bpmnElementsRegistry.addCssClasses(elementId, [
-        "highlight-happy-path",
-        "pulse-happy"
-      ]);
-    } else if (elementType === "gateway") {
-      bpmnVisualization.bpmnElementsRegistry.addCssClasses(elementId, [
-        "gateway-happy"
-      ]);
-    } else {
-      //flow
-      bpmnVisualization.bpmnElementsRegistry.addCssClasses(elementId, [
-        "growing-happy"
-      ]);
+  const headElt = document.getElementsByTagName('head')[0];
+
+  /* iterate over the elements in the happyPath
+   apply css and add a delay so that we see the css applied in a sequential manner */
+  happyPath.forEach((elementId, index) => {
+    const style = document.createElement('style');
+    style.id = elementId;
+    style.type = 'text/css';
+
+    let classToAdd;
+
+    if (isActivity(elementId)) {
+      style.innerHTML = `.animate-${elementId} > rect { animation-delay: ${index * 1.5}s; }`;
+      classToAdd = "pulse-happy";
+    } else if ( isEvent(elementId)) {
+      style.innerHTML = `.animate-${elementId} > ellipse { animation-delay: ${index * 1.5}s; }`;
+      classToAdd = "pulse-happy";
+    } else if (isGateway(elementId)) {
+      style.innerHTML = `.animate-${elementId} > path { animation-delay: ${index * 1.5}s; }`;
+      classToAdd = "gateway-happy";
+    } else { // flow
+      style.innerHTML = `.animate-${elementId} > path:nth-child(2) { animation-delay: ${index * 1.5}s; animation-duration: 2s; } \n` +
+          `.animate-${elementId} > path:nth-child(3) { animation-delay: ${index * 2}s; animation-duration: 0.5s; }`;
+      classToAdd = "growing-happy";
     }
+    headElt.appendChild(style);
+
+    bpmnVisualization.bpmnElementsRegistry.addCssClasses(elementId, [ classToAdd, `animate-${elementId}` ]);
   });
 
   bpmnVisualization.bpmnElementsRegistry.addOverlays(happyPathElementWithOverlays, {
@@ -77,28 +61,20 @@ export function showHappyPath(bpmnVisualization) {
 }
 
 /**
- * @param {BpmnVisualization} bpmnVisualization 
+ * @param {BpmnVisualization} bpmnVisualization
  */
 export function hideHappyPath(bpmnVisualization) {
   bpmnVisualization.bpmnElementsRegistry.removeCssClasses(happyPath, [
     "highlight-happy-path",
     "pulse-happy",
     "gateway-happy",
-    "growing-happy"
+    "growing-happy",
+    ...happyPath.map((elementId) => {
+      let styleOfElement = document.getElementById(elementId);
+      styleOfElement.parentNode.removeChild(styleOfElement);
+      return  `animate-${elementId}`
+    })
   ]);
-  
-  bpmnVisualization.bpmnElementsRegistry.removeAllOverlays(happyPathElementWithOverlays)
-}
 
-function getTypeOf(elementId) {
-  if (activitiesMap.has(elementId)) {
-    return "activity";
-  }
-  if (gatewaysMap.has(elementId)) {
-    return "gateway";
-  }
-  if (eventsMap.has(elementId)) {
-    return "event";
-  }
-  return "flow";
+  bpmnVisualization.bpmnElementsRegistry.removeAllOverlays(happyPathElementWithOverlays)
 }
