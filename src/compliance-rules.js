@@ -1,8 +1,9 @@
-import tippy from "tippy.js";
+import tippy, {sticky} from "tippy.js";
 import "tippy.js/dist/tippy.css";
 
-const registeredBpmnElements = new Map();
-const bpmnContainerElt = window.document.getElementById("bpmn-container");
+
+const tippyInstances = [];
+
 
 // tippy global configuration
 tippy.setDefaultProps({
@@ -38,68 +39,32 @@ tippy.setDefaultProps({
   // inlinePositioning: true,
 
   // https://atomiks.github.io/tippyjs/v6/all-props/#interactive
-  interactive: true
+  interactive: true,
 
   // https://atomiks.github.io/tippyjs/v6/all-props/#movetransition
   // custom transition --> not needed
   // moveTransition: 'transform 0.2s ease-out',
 });
 
+
+const complianceRulesCssClassnames = [
+  "rule-violation", // animation for the ripple circles
+  "c-hand" // Set the cursor to mark the elements as clickable
+];
+
 /**
  * @param {BpmnVisualization} bpmnVisualization
  */
 export function showComplianceRules(bpmnVisualization) {
-  bpmnVisualization.bpmnElementsRegistry.addCssClasses(
-    "Activity_0yabbur",
-    "rule-violation"
-  );
-
-  bpmnVisualization.bpmnElementsRegistry.addCssClasses(
-    "Activity_1u4jwkv",
-    "rule-violation"
-  );
-
-  //on click, show activities that are affected by the violation rule
-  const violActivityElt1 = bpmnVisualization.bpmnElementsRegistry.getElementsByIds(
-    "Activity_0yabbur"
-  )[0].htmlElement;
-
-  violActivityElt1.children[0].onclick = () => {
-    /*bpmnVisualization.bpmnElementsRegistry.addCssClasses(
-      "Activity_0yabbur",
-      "highlight-rule-violation-level1"
-    );
-
-    bpmnVisualization.bpmnElementsRegistry.addCssClasses(
-      "Activity_1u4jwkv",
-      "pulse-rule-violation-level2"
-    );
-    bpmnVisualization.bpmnElementsRegistry.addCssClasses(
-      "Activity_00vbm9s",
-      "pulse-rule-violation-level3"
-    );*/
-    //add overlays and tiptools showing more info
-    addPopover(
-      bpmnVisualization.bpmnElementsRegistry.getElementsByIds(
-        "Activity_0yabbur"
-      ),
-      bpmnVisualization
-    );
-
-    addPopover(
-      bpmnVisualization.bpmnElementsRegistry.getElementsByIds(
-        "Activity_1u4jwkv"
-      ),
-      bpmnVisualization
-    );
-  };
-
-  //add ripple circles on activities of the violation rules
   const activities = ["Activity_0yabbur", "Activity_1u4jwkv"];
-  activities.forEach(function (activityId, index) {
+  // this must be called first, prior adding ripple circles (which is managed by making custom svg manipulation) as mxGraph will repaint the elements
+  bpmnVisualization.bpmnElementsRegistry.addCssClasses(activities, complianceRulesCssClassnames);
+
+  // add custom behavior on activities of the violation rules
+  activities.forEach(activityId => {
     addRippleCircles(activityId, bpmnVisualization);
+    addPopover(activityId, bpmnVisualization);
   });
-  console.log(violActivityElt1);
 }
 
 /**
@@ -210,19 +175,16 @@ function addRippleCircles(activityId, bpmnVisualization) {
 }
 
 /**
- * @param bpmnElements
+ * @param activityId
  * @param {BpmnVisualization} bpmnVisualization
  */
-function addPopover(bpmnElements, bpmnVisualization) {
-  registerBpmnElements(bpmnElements);
-  // Set the cursor to mark the elements as clickable
-  /*bpmnVisualization.bpmnElementsRegistry.addCssClasses(
-    bpmnElements.map((element) => element.bpmnSemantic.id),
-    "c-hand"
-  );*/
+// function addPopover(bpmnElements, bpmnVisualization) {
+function addPopover(activityId, bpmnVisualization) {
+  const activity = bpmnVisualization.bpmnElementsRegistry.getElementsByIds(activityId)[0];
+  registerBpmnElement(activity);
 
-  const htmlElements = bpmnElements.map((elt) => elt.htmlElement);
-  tippy(htmlElements, {
+  const tippyInstance = tippy(activity.htmlElement, {
+    plugins: [sticky],
     theme: "violation",
     // sticky option behavior with this appendTo
     // The following is only needed to manage diagram navigation
@@ -235,7 +197,7 @@ function addPopover(bpmnElements, bpmnVisualization) {
     // When trigger on click
     // 'reference': work with zoom (do not move the popper), but disappear on pan, mainly vertical pan (translation computation issue)
     // 'popper': do not move on zoom, move on pan but also change the dimension of the tooltip while pan)
-    appendTo: bpmnContainerElt,
+    appendTo: bpmnVisualization.graph.container,
 
     // When trigger on click
     // when using this, no resize issue on pan, but no more flip nor overflow. We can however use sticky: 'reference' with is better
@@ -257,12 +219,18 @@ function addPopover(bpmnElements, bpmnVisualization) {
 
     trigger: "click"
   });
+
+  tippyInstances.push(tippyInstance);
 }
 
-function registerBpmnElements(bpmnElements) {
-  bpmnElements.forEach((elt) =>
-    registeredBpmnElements.set(elt.htmlElement, elt.bpmnSemantic)
-  );
+// TODO refactor as we have several needs (content by bpmnSemantic.id, bpmnSemantic.id to then call the bpmn-visualization API)
+// key: htmlElement
+// value: bpmn semantic
+// TODO elements are never unregistered!
+const registeredBpmnElements = new Map();
+
+function registerBpmnElement(bpmnElement) {
+  registeredBpmnElements.set(bpmnElement.htmlElement, bpmnElement.bpmnSemantic)
 }
 
 function getContent(htmlElement) {
@@ -307,23 +275,37 @@ function getContent(htmlElement) {
   }
 }
 
-export function hideComplianceRules() {
-  removeRippleCircles();
+/**
+ * @param {BpmnVisualization} bpmnVisualization
+ */
+export function hideComplianceRules(bpmnVisualization) {
+  // unregister tippy instances
+  for (let instance of tippyInstances) {
+    instance.destroy()
+  }
+  tippyInstances.length = 0;
+
+  // remove all CSS classnames. mxGraph repaint the elements so it also remove the ripple circles
+// TODO refactor, call removeCssClasses only one
+  for (let bpmnSemantic of registeredBpmnElements.values()) {
+    bpmnVisualization.bpmnElementsRegistry.removeCssClasses(bpmnSemantic.id, complianceRulesCssClassnames);
+  }
 }
 
-function removeRippleCircles() {
-  var circles = document.querySelectorAll(".rp1");
-  circles.forEach((circle) => {
-    circle.remove();
-  });
-
-  circles = document.querySelectorAll(".rp2");
-  circles.forEach((circle) => {
-    circle.remove();
-  });
-
-  circles = document.querySelectorAll(".rp3");
-  circles.forEach((circle) => {
-    circle.remove();
-  });
-}
+// TODO refactor, the ripple circles should be in a SVG group, then only remove the group
+// function removeRippleCircles() {
+//   var circles = document.querySelectorAll(".rp1");
+//   circles.forEach((circle) => {
+//     circle.remove();
+//   });
+//
+//   circles = document.querySelectorAll(".rp2");
+//   circles.forEach((circle) => {
+//     circle.remove();
+//   });
+//
+//   circles = document.querySelectorAll(".rp3");
+//   circles.forEach((circle) => {
+//     circle.remove();
+//   });
+// }

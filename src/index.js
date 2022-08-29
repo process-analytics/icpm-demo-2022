@@ -15,7 +15,7 @@ const mainBpmnVisualization = new BpmnVisualization({
 
 // Load BPMN diagram
 // Try the "Center" type to fit the whole container and center the diagram
-mainBpmnVisualization.load(collapsedDiagram, { fit: { type: "None" } });
+mainBpmnVisualization.load(collapsedDiagram, { fit: { type: "Center", margin: 10 } });
 
 
 // Interaction
@@ -36,7 +36,7 @@ footer.innerText = `bpmn-visualization@${version.lib}`;
 
 
 /*TO BE IMPLEMENTED
-observe navigation and zooming and 
+observe navigation and zooming and
 update circle ripples and linearGradient if they were added*/
 
 var containerBpmn = document.querySelector("#main-bpmn-container");
