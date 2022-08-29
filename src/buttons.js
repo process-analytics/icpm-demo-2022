@@ -15,12 +15,12 @@ export function configureButtons(bpmnVisualization) {
     document.getElementById("reset_all").addEventListener("click",  () => {
         hideHappyPath(bpmnVisualization);
         hideConformanceData(bpmnVisualization);
-        hideComplianceRules();
+        hideComplianceRules(bpmnVisualization);
     });
 
     addEventListener("happy_path", state.isHappyPathDisplayed, () => showHappyPath(bpmnVisualization), () => hideHappyPath(bpmnVisualization));
     addEventListener("conformance_data", state.isConformanceDisplayed, () => showConformanceData(bpmnVisualization), () => hideConformanceData(bpmnVisualization));
-    addEventListener("compliance_rules", state.isComplianceDisplayed, () => showComplianceRules(bpmnVisualization), () => hideComplianceRules());
+    addEventListener("compliance_rules", state.isComplianceDisplayed, () => showComplianceRules(bpmnVisualization), () => hideComplianceRules(bpmnVisualization));
 }
 
 function addEventListener(buttonId, buttonState, showCallback, hideCallback){
