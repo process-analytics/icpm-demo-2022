@@ -1,4 +1,4 @@
-import { ShapeBpmnElementKind } from "bpmn-visualization";
+import { ShapeBpmnElementKind, FlowKind } from "bpmn-visualization";
 const overlayConfigSynchronous = {
   style: {
     font: {
@@ -71,6 +71,7 @@ eventsMap.set("Event_0e43ncy", "Vendor creates invoice");
  * @param {BpmnVisualization} bpmnVisualization
  */
 export function showConformanceData(bpmnVisualization) {
+  /*activities and events*/
   //create purchase order item
   addOverlay("Activity_1t65hvk", "synchronous", "611", bpmnVisualization);
   addOverlay("Activity_1t65hvk", "modelMove", "0", bpmnVisualization);
@@ -103,6 +104,29 @@ export function showConformanceData(bpmnVisualization) {
   addOverlay("Activity_0yabbur", "synchronous", "448", bpmnVisualization);
   addOverlay("Activity_0yabbur", "modelMove", "163", bpmnVisualization);
   createLinearGradient("Activity_0yabbur", [448, 163], bpmnVisualization);
+
+  /*edges*/
+  //incoming and outgoing flows of "vendor creates invoice"
+  addEdgeOverlay("Flow_169iupn", bpmnVisualization);
+  addEdgeOverlay("Flow_0hpz0ab", bpmnVisualization);
+  //incoming and outgoing flows of create purchase order item
+  addEdgeOverlay("Flow_1ojqrz1", bpmnVisualization);
+  addEdgeOverlay("Flow_1a9zw3d", bpmnVisualization);
+  //incming of SRM subprocess
+  addEdgeOverlay("Flow_06ca3ya", bpmnVisualization);
+  //record goods receipts: incoming and outgoing
+  addEdgeOverlay("Flow_1448s6h", bpmnVisualization);
+  addEdgeOverlay("Flow_14tr1q9", bpmnVisualization);
+  //incming of exclusive gateway of service entry sheet needed?
+  addEdgeOverlay("Flow_0j5xinh", bpmnVisualization);
+  //record service entry sheet: outgoing
+  addEdgeOverlay("Flow_0pu7ps3", bpmnVisualization);
+  //record invoice receipt: outgoing
+  addEdgeOverlay("Flow_0lrixjg", bpmnVisualization);
+  //remove payment block: outgoing
+  addEdgeOverlay("Flow_1vzcv72", bpmnVisualization);
+  //clear invoice: outgoing
+  addEdgeOverlay("Flow_12q12yb", bpmnVisualization);
 }
 
 /**
@@ -125,6 +149,22 @@ function addOverlay(elementId, overlayType, label, bpmnVisualization) {
       ...overlayConfigModelMove,
     });
   }
+  /*else if (overlayType === "logMove") {
+    bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
+      position: "top-right",
+      label: label,
+      ...overlayConfigLogMove,
+    });
+  }*/
+}
+
+function addEdgeOverlay(elementId, bpmnVisualization) {
+  bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
+    position: "middle",
+    label: "💥",
+    ...overlayConfigLogMove,
+  });
+
   /*else if (overlayType === "logMove") {
     bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
       position: "top-right",
@@ -227,6 +267,14 @@ export function hideConformanceData(bpmnVisualization) {
       ShapeBpmnElementKind.EVENT_INTERMEDIATE_CATCH
     );
   bpmnEventElements.forEach((elt) => {
+    bpmnElementsRegistry.removeAllOverlays(elt.bpmnSemantic.id);
+  });
+
+  const bpmnFlowElements =
+    bpmnVisualization.bpmnElementsRegistry.getElementsByKinds(
+      FlowKind.SEQUENCE_FLOW
+    );
+  bpmnFlowElements.forEach((elt) => {
     bpmnElementsRegistry.removeAllOverlays(elt.bpmnSemantic.id);
   });
 
