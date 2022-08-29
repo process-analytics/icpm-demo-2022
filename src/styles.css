@@ -123,14 +123,6 @@ footer {
 }*/
 
 
-/*
-.animate__animated.animate__pulse {
-  --animate-duration: 2s;
-  --animate-delay: 0.9s;
-}
-*/
-
-
 .bpmn-type-activity.pulse-happy > rect, .bpmn-type-event.pulse-happy > ellipse {
   animation-name: pulse-happy-path;
   animation-iteration-count: 1;
