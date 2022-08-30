@@ -12,6 +12,7 @@ const happyPath = [
   "Flow_06ca3ya",
   "Activity_0ec8azh",
   "Flow_1y1kscn",
+  "Gateway_0apcz1e",
   "Flow_1ojqrz1",
   "Activity_1t65hvk",
   "Flow_1a9zw3d",
@@ -21,6 +22,7 @@ const happyPath = [
   "Flow_1448s6h",
   "Activity_00vbm9s",
   "Flow_14tr1q9",
+  "Gateway_01gpztl",
   "Flow_19cdedl",
   "Flow_06uo70h",
   "Gateway_0domayw",
@@ -39,6 +41,36 @@ const happyPath = [
 
 const happyPathElementWithOverlays = "Event_1vogvxc";
 
+const animationDuration = 1;
+const animationDurationOfEdgeArrow = 0.3;
+
+const animationDelay = animationDuration / 2;
+const animationDurationOfEdgeLine = animationDuration - animationDurationOfEdgeArrow;
+
+function getHappyPathClasses(index, elementId) {
+  const delay = index * animationDelay;
+
+  let classToAdd;
+  let styleInnerHTML;
+  if (isActivity(elementId)) {
+    styleInnerHTML = `.animate-${elementId} > rect { animation-delay: ${delay}s; animation-duration: ${animationDuration}s; }`;
+    classToAdd = "pulse-happy";
+  } else if (isEvent(elementId)) {
+    styleInnerHTML = `.animate-${elementId} > ellipse { animation-delay: ${delay}s; animation-duration: ${animationDuration}s; }`;
+    classToAdd = "pulse-happy";
+  } else if (isGateway(elementId)) {
+    styleInnerHTML = `.animate-${elementId} > path { animation-delay: ${delay}s; animation-duration: ${animationDuration}s; }`;
+    classToAdd = "gateway-happy";
+  } else {
+    // flow
+    styleInnerHTML =
+        `.animate-${elementId} > path:nth-child(2) { animation-delay: ${delay}s; animation-duration: ${animationDurationOfEdgeLine}s; } \n` +
+        `.animate-${elementId} > path:nth-child(3) { animation-delay: ${delay + animationDurationOfEdgeLine / 2}s; animation-duration: ${animationDurationOfEdgeArrow}s; }`;
+    classToAdd = "growing-happy";
+  }
+  return {classToAdd, styleInnerHTML};
+}
+
 /**
  * @param {BpmnVisualization} bpmnVisualization
  */
@@ -48,59 +80,30 @@ export function showHappyPath(bpmnVisualization) {
   /* iterate over the elements in the happyPath
    apply css and add a delay so that we see the css applied in a sequential manner */
   happyPath.forEach((elementId, index) => {
+    const {classToAdd, styleInnerHTML} = getHappyPathClasses(index, elementId);
+
     const style = document.createElement("style");
     style.id = elementId;
     style.type = "text/css";
-
-    let classToAdd;
-
-    if (isActivity(elementId)) {
-      style.innerHTML = `.animate-${elementId} > rect { animation-delay: ${
-        index * 1.5
-      }s; }`;
-      classToAdd = "pulse-happy";
-    } else if (isEvent(elementId)) {
-      style.innerHTML = `.animate-${elementId} > ellipse { animation-delay: ${
-        index * 1.5
-      }s; }`;
-      classToAdd = "pulse-happy";
-    } else if (isGateway(elementId)) {
-      style.innerHTML = `.animate-${elementId} > path { animation-delay: ${
-        index * 1.5
-      }s; }`;
-      classToAdd = "gateway-happy";
-    } else {
-      // flow
-      style.innerHTML =
-        `.animate-${elementId} > path:nth-child(2) { animation-delay: ${
-          index * 1.5
-        }s; animation-duration: 2s; } \n` +
-        `.animate-${elementId} > path:nth-child(3) { animation-delay: ${
-          index * 2
-        }s; animation-duration: 0.5s; }`;
-      classToAdd = "growing-happy";
-    }
+    style.innerHTML = styleInnerHTML;
     headElt.appendChild(style);
 
-    bpmnVisualization.bpmnElementsRegistry.addCssClasses(elementId, [
-      classToAdd,
-      `animate-${elementId}`,
-    ]);
+    bpmnVisualization.bpmnElementsRegistry.addCssClasses(elementId, [classToAdd, `animate-${elementId}`]);
   });
 
   bpmnVisualization.bpmnElementsRegistry.addOverlays(
-    happyPathElementWithOverlays,
-    [
-      {
-        position: "top-left",
-        label: "45 traces \n (7.36%) \n ⏳ 2.08 months",
-        style: {
-          font: { color: "green", size: 14 },
-          fill: { color: "White", opacity: 40 },
-          stroke: { color: "black", width: 0 },
+      happyPathElementWithOverlays,
+      [
+        {
+          position: "top-left",
+          label: "45 traces \n (7.36%) \n ⏳ 2.08 months",
+          style: {
+            font: { color: "green", size: 14 },
+            fill: { color: "White", opacity: 40 },
+            stroke: { color: "black", width: 0 },
+          },
         },
-      },
-    ]
+      ]
   );
 }
 
@@ -121,6 +124,6 @@ export function hideHappyPath(bpmnVisualization) {
   ]);
 
   bpmnVisualization.bpmnElementsRegistry.removeAllOverlays(
-    happyPathElementWithOverlays
+      happyPathElementWithOverlays
   );
 }

@@ -126,7 +126,6 @@ footer {
 .bpmn-type-activity.pulse-happy > rect, .bpmn-type-event.pulse-happy > ellipse {
   animation-name: pulse-happy-path;
   animation-iteration-count: 1;
-  animation-duration: 2s;
   animation-timing-function: ease-in;
   animation-fill-mode: forwards;
 }
@@ -151,7 +150,6 @@ footer {
   --fillStart: white;
   --fillEnd: white;
   animation-name: grow;
-  animation-duration: 2s;
   animation-timing-function: ease-in;
   animation-iteration-count: 1;
   animation-direction: normal;
