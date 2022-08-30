@@ -1,9 +1,7 @@
 import tippy, {sticky} from "tippy.js";
 import "tippy.js/dist/tippy.css";
 
-
 const tippyInstances = [];
-
 
 // tippy global configuration
 tippy.setDefaultProps({
@@ -72,9 +70,9 @@ export function showComplianceRules(bpmnVisualization) {
  * @param {BpmnVisualization} bpmnVisualization
  */
 function addRippleCircles(activityId, bpmnVisualization) {
-  const svgHtmlElement = bpmnVisualization.bpmnElementsRegistry.getElementsByIds(
-    activityId
-  )[0].htmlElement;
+  const svgHtmlElement =
+    bpmnVisualization.bpmnElementsRegistry.getElementsByIds(activityId)[0]
+      .htmlElement;
 
   var x = parseInt(svgHtmlElement.children[0].getAttribute("x"), 10);
   var y = parseInt(svgHtmlElement.children[0].getAttribute("y"), 10);
@@ -212,12 +210,12 @@ function addPopover(activityId, bpmnVisualization) {
     // only check the "reference" rect for changes
     sticky: "reference",
     // only check the "popper" rect for changes
-    // sticky: 'popper',
+    //sticky: "popper",
 
     duration: 400,
     delay: [200, 400],
 
-    trigger: "click"
+    trigger: "click",
   });
 
   tippyInstances.push(tippyInstance);
