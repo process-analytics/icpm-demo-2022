@@ -1,5 +1,7 @@
 # icpm-demo-2022
 
+The code of this tutorial is released under the [Apache 2.0](LICENSE) license.
+
 ## Setup
 
 Use node 16
