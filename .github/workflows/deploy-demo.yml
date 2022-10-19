@@ -4,7 +4,7 @@ name: Deploy the demo
 on:
   # Triggers the workflow on push event but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ "main", "36-Publish-the-demo-to-GitHub-Pages" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
