@@ -6,8 +6,8 @@
   "main": "index.html",
   "scripts": {
     "start": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "vite build --base=/icpm-demo-2022/",
+    "preview": "vite preview --base /icpm-demo-2022/ --open"
   },
   "dependencies": {
     "animejs": "3.2.1",
