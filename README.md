@@ -1,6 +1,10 @@
-# icpm-demo-2022
+# The Demo for ICPM 2022
 
-## Setup
+## 🎮 The deployed solution
+
+To see the deployed solution: https://process-analytics.github.io/bpmn-visualization-tutorial-getting-started/
+
+## ⚒️ Setup
 
 Use node 16
 
