@@ -1,6 +1,6 @@
 # icpm-demo-2022
 
-The code of this tutorial is released under the [Apache 2.0](LICENSE) license.
+The code of this demo is released under the [Apache 2.0](LICENSE) license.
 
 ## Setup
 
