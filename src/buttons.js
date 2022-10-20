@@ -2,19 +2,13 @@ import { hideHappyPath, showHappyPath } from "./happy-path";
 import { hideConformanceData, showConformanceData } from "./conformance";
 import { hideComplianceRules, showComplianceRules } from "./compliance-rules";
 
-const state = {
-    isHappyPathDisplayed : false,
-    isConformanceDisplayed : false,
-    isComplianceDisplayed : false,
-};
-
 /**
  * @param {BpmnVisualization} bpmnVisualization
  */
 export function configureButtons(bpmnVisualization) {
-    let happyPathButton = new RuleButton("happy_path", state.isHappyPathDisplayed, () => showHappyPath(bpmnVisualization), () => hideHappyPath(bpmnVisualization));
-    let conformanceDataButton = new RuleButton("conformance_data", state.isConformanceDisplayed, () => showConformanceData(bpmnVisualization), () => hideConformanceData(bpmnVisualization));
-    let complianceRulesButton = new RuleButton("compliance_rules", state.isComplianceDisplayed, () => showComplianceRules(bpmnVisualization), () => hideComplianceRules(bpmnVisualization));
+    let happyPathButton = new RuleButton("happy_path", () => showHappyPath(bpmnVisualization), () => hideHappyPath(bpmnVisualization));
+    let conformanceDataButton = new RuleButton("conformance_data", () => showConformanceData(bpmnVisualization), () => hideConformanceData(bpmnVisualization));
+    let complianceRulesButton = new RuleButton("compliance_rules", () => showComplianceRules(bpmnVisualization), () => hideComplianceRules(bpmnVisualization));
 
     document.getElementById("reset_all").addEventListener("click",  () => {
         happyPathButton.hide();
@@ -24,9 +18,9 @@ export function configureButtons(bpmnVisualization) {
 }
 
 class RuleButton {
-    constructor(id, state, showCallback, hideCallback) {
+    constructor(id, showCallback, hideCallback) {
         this.button = document.getElementById(id);
-        this.state = state;
+        this.state = false;
         this.showCallback = showCallback;
         this.hideCallback = hideCallback;
 
