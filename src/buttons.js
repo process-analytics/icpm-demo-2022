@@ -12,29 +12,40 @@ const state = {
  * @param {BpmnVisualization} bpmnVisualization
  */
 export function configureButtons(bpmnVisualization) {
-    document.getElementById("reset_all").addEventListener("click",  () => {
-        hideHappyPath(bpmnVisualization);
-        hideConformanceData(bpmnVisualization);
-        hideComplianceRules(bpmnVisualization);
-    });
+    let happyPathButton = new RuleButton("happy_path", state.isHappyPathDisplayed, () => showHappyPath(bpmnVisualization), () => hideHappyPath(bpmnVisualization));
+    let conformanceDataButton = new RuleButton("conformance_data", state.isConformanceDisplayed, () => showConformanceData(bpmnVisualization), () => hideConformanceData(bpmnVisualization));
+    let complianceRulesButton = new RuleButton("compliance_rules", state.isComplianceDisplayed, () => showComplianceRules(bpmnVisualization), () => hideComplianceRules(bpmnVisualization));
 
-    addEventListener("happy_path", state.isHappyPathDisplayed, () => showHappyPath(bpmnVisualization), () => hideHappyPath(bpmnVisualization));
-    addEventListener("conformance_data", state.isConformanceDisplayed, () => showConformanceData(bpmnVisualization), () => hideConformanceData(bpmnVisualization));
-    addEventListener("compliance_rules", state.isComplianceDisplayed, () => showComplianceRules(bpmnVisualization), () => hideComplianceRules(bpmnVisualization));
+    document.getElementById("reset_all").addEventListener("click",  () => {
+        happyPathButton.hide();
+        conformanceDataButton.hide();
+        complianceRulesButton.hide();
+    });
 }
 
-function addEventListener(buttonId, buttonState, showCallback, hideCallback){
-    const button = document.getElementById(buttonId);
+class RuleButton {
+    constructor(id, state, showCallback, hideCallback) {
+        this.button = document.getElementById(id);
+        this.state = state;
+        this.showCallback = showCallback;
+        this.hideCallback = hideCallback;
 
-    button.addEventListener("click", function () {
-        if (!buttonState) {
-            showCallback();
-            button.innerHTML = button.innerHTML.replace('Show', 'Hide');
-            buttonState = true;
-        } else {
-            hideCallback();
-            button.innerHTML = button.innerHTML.replace( 'Hide', 'Show');
-            buttonState = false;
-        }
-    });
+        this.addEventListenerOnClick();
+    }
+
+    addEventListenerOnClick() {
+        this.button.addEventListener("click", () => !this.state ? this.show() : this.hide());
+    }
+
+    show() {
+        this.showCallback();
+        this.button.innerHTML = this.button.innerHTML.replace('Show', 'Hide');
+        this.state = true;
+    }
+
+    hide() {
+        this.hideCallback();
+        this.button.innerHTML = this.button.innerHTML.replace('Hide', 'Show');
+        this.state = false;
+    }
 }
