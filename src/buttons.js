@@ -32,14 +32,18 @@ class RuleButton {
     }
 
     show() {
-        this.showCallback();
-        this.button.innerHTML = this.button.innerHTML.replace('Show', 'Hide');
-        this.dataAreShowed = true;
+        if(!this.dataAreShowed) {
+            this.showCallback();
+            this.button.innerHTML = this.button.innerHTML.replace('Show', 'Hide');
+            this.dataAreShowed = true;
+        }
     }
 
     hide() {
-        this.hideCallback();
-        this.button.innerHTML = this.button.innerHTML.replace('Hide', 'Show');
-        this.dataAreShowed = false;
+        if(this.dataAreShowed) {
+            this.hideCallback();
+            this.button.innerHTML = this.button.innerHTML.replace('Hide', 'Show');
+            this.dataAreShowed = false;
+        }
     }
 }
