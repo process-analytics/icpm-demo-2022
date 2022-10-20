@@ -20,7 +20,7 @@ export function configureButtons(bpmnVisualization) {
 class RuleButton {
     constructor(id, showCallback, hideCallback) {
         this.button = document.getElementById(id);
-        this.state = false;
+        this.dataAreShowed = false;
         this.showCallback = showCallback;
         this.hideCallback = hideCallback;
 
@@ -28,18 +28,18 @@ class RuleButton {
     }
 
     addEventListenerOnClick() {
-        this.button.addEventListener("click", () => !this.state ? this.show() : this.hide());
+        this.button.addEventListener("click", () => this.dataAreShowed ? this.hide() : this.show());
     }
 
     show() {
         this.showCallback();
         this.button.innerHTML = this.button.innerHTML.replace('Show', 'Hide');
-        this.state = true;
+        this.dataAreShowed = true;
     }
 
     hide() {
         this.hideCallback();
         this.button.innerHTML = this.button.innerHTML.replace('Hide', 'Show');
-        this.state = false;
+        this.dataAreShowed = false;
     }
 }
