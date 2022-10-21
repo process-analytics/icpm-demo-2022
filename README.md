@@ -1,8 +1,8 @@
-# The Demo for ICPM 2022
+# The demo presented at ICPM 2022 
 
 ## 🎮 The deployed solution
 
-To see the deployed solution: https://process-analytics.github.io/bpmn-visualization-tutorial-getting-started/
+To see the deployed solution: https://process-analytics.github.io/icpm-demo-2022/
 
 ## ⚒️ Setup
 
