@@ -8,6 +8,8 @@ on:
 jobs:
   check-pr-title:
     runs-on: ubuntu-22.04
+    permissions:
+      pull-requests: write # conventional-commits-pr-action: PR comments
     steps:
       - name: Check pull request title
         uses: jef/conventional-commits-pr-action@v1
