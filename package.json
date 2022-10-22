@@ -12,12 +12,12 @@
   },
   "dependencies": {
     "animejs": "3.2.1",
-    "bpmn-visualization": "0.26.0",
-    "spectre.css": "^0.5.9",
+    "bpmn-visualization": "0.27.1",
+    "spectre.css": "0.5.9",
     "tippy.js": "6.3.7"
   },
   "devDependencies": {
-    "vite": "~3.0.5"
+    "vite": "~3.1.8"
   },
   "keywords": []
 }
