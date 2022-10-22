@@ -9,8 +9,6 @@ on:
     paths:
       - '.github/actions/build/**/*'
       - '.github/workflows/deploy-pr-preview.yml'
-      - 'config/**/*'
-      - 'dev/**/*'
       - 'src/**/*'
       - '.nvmrc'
       - 'index.html'
@@ -24,7 +22,6 @@ jobs:
       pull-requests: write # surge-preview: PR comments
     steps:
       - uses: actions/checkout@v3
-# TODO use the shared action in the other workflow
       - name: Build
         uses: ./.github/actions/build
         if: github.event.action != 'closed'
