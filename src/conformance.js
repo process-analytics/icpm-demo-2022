@@ -3,7 +3,7 @@ const overlayConfigSynchronous = {
   style: {
     font: {
       color: "black",
-      size: 16,
+      size: 18,
     },
     stroke: {
       color: "#00FF00",
@@ -18,7 +18,7 @@ const overlayConfigLogMove = {
   style: {
     font: {
       color: "black",
-      size: 16,
+      size: 18,
     },
     stroke: {
       color: "transparent",
@@ -33,7 +33,7 @@ const overlayConfigModelMove = {
   style: {
     font: {
       color: "black",
-      size: 16,
+      size: 18,
     },
     stroke: {
       color: "#FF00FF",
