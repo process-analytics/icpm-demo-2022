@@ -140,13 +140,13 @@ footer {
   }
   100% {
     stroke: var(--color-highlight-happy);
-    stroke-width: .3rem;
+    stroke-width: .2rem;
   }
 }
 
 .gateway-happy > path, .growing-happy > path {
   --stroke: var(--color-highlight-happy);
-  --stroke-width: .3rem;
+  --stroke-width: .2rem;
   --fillStart: white;
   --fillEnd: white;
   animation-name: grow;
