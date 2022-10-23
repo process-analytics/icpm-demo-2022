@@ -114,17 +114,21 @@ export function showConformanceData(bpmnVisualization) {
  */
 function addOverlay(elementId, overlayType, label, bpmnVisualization) {
   if (overlayType === "synchronous") {
-    bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
-      position: "top-left",
-      label: label,
-      ...overlayConfigSynchronous,
-    });
+    if (label !== false){
+      bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
+        position: "top-left",
+        label: label,
+        ...overlayConfigSynchronous,
+      });
+    }
   } else if (overlayType === "modelMove") {
-    bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
-      position: "top-right",
-      label: label,
-      ...overlayConfigModelMove,
-    });
+    if(label != false){
+      bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
+        position: "top-right",
+        label: label,
+        ...overlayConfigModelMove,
+      });
+    }
   }
   /*else if (overlayType === "logMove") {
     bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
