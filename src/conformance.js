@@ -95,15 +95,15 @@ export function showConformanceData(bpmnVisualization) {
   addEdgeOverlay("Flow_1448s6h", bpmnVisualization);
   addEdgeOverlay("Flow_14tr1q9", bpmnVisualization);
   //incming of exclusive gateway of service entry sheet needed?
-  addEdgeOverlay("Flow_0j5xinh", bpmnVisualization);
+  //addEdgeOverlay("Flow_0j5xinh", bpmnVisualization);
   //record service entry sheet: outgoing
-  addEdgeOverlay("Flow_0pu7ps3", bpmnVisualization);
+  //addEdgeOverlay("Flow_0pu7ps3", bpmnVisualization);
   //record invoice receipt: outgoing
-  addEdgeOverlay("Flow_0lrixjg", bpmnVisualization);
+  //addEdgeOverlay("Flow_0lrixjg", bpmnVisualization);
   //remove payment block: outgoing
   addEdgeOverlay("Flow_1vzcv72", bpmnVisualization);
   //clear invoice: outgoing
-  addEdgeOverlay("Flow_12q12yb", bpmnVisualization);
+  //addEdgeOverlay("Flow_12q12yb", bpmnVisualization);
 }
 
 /**
