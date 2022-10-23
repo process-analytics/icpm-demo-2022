@@ -6,7 +6,7 @@ const overlayConfigSynchronous = {
       size: 16,
     },
     stroke: {
-      color: "black",
+      color: "#00FF00",
     },
     fill: {
       color: "#00FF00",
@@ -21,10 +21,10 @@ const overlayConfigLogMove = {
       size: 16,
     },
     stroke: {
-      color: "black",
+      color: "transparent",
     },
     fill: {
-      color: "yellow",
+      color: "transparent",
     },
   },
 };
@@ -36,7 +36,7 @@ const overlayConfigModelMove = {
       size: 16,
     },
     stroke: {
-      color: "black",
+      color: "#FF00FF",
     },
     fill: {
       color: "#FF00FF",
@@ -138,7 +138,7 @@ function addOverlay(elementId, overlayType, label, bpmnVisualization) {
 function addEdgeOverlay(elementId, bpmnVisualization) {
   bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
     position: "middle",
-    label: "💥",
+    label: "🟨",
     ...overlayConfigLogMove,
   });
 
