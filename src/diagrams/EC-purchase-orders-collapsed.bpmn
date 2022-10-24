@@ -151,7 +151,7 @@
         <omgdi:waypoint x="885" y="370" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_19cdedl_di" bpmnElement="Flow_19cdedl">
-        <omgdi:waypoint x="880" y="210" />
+        <omgdi:waypoint x="875" y="210" />
         <omgdi:waypoint x="910" y="210" />
         <omgdi:waypoint x="910" y="345" />
       </bpmndi:BPMNEdge>
