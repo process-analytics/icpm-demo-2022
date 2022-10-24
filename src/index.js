@@ -1,4 +1,4 @@
-import { BpmnVisualization } from "bpmn-visualization";
+import { BpmnVisualization, FitType } from "bpmn-visualization";
 
 import collapsedDiagram from "./diagrams/EC-purchase-orders-collapsed.bpmn?raw";
 import { configureButtons } from "./buttons";
@@ -10,12 +10,11 @@ window.loadBpmnDiagram = loadBpmnDiagram;
 // 'bpmn-visualization' API documentation: https://process-analytics.github.io/bpmn-visualization-js/api/index.html
 const mainBpmnVisualization = new BpmnVisualization({
   container: 'main-bpmn-container',
-  navigation: { enabled: true } // remove this line or set to false if you don't want to use Diagram Navigation
 });
 
 // Load BPMN diagram
 // Try the "Center" type to fit the whole container and center the diagram
-mainBpmnVisualization.load(collapsedDiagram, { fit: { type: "Center", margin: 10 } });
+mainBpmnVisualization.load(collapsedDiagram, { fit: { type: FitType.Center, margin: 10 } });
 
 
 // Interaction
