@@ -1,0 +1,43 @@
+name: Deploy PR preview
+
+on:
+  pull_request:
+    # To manage 'surge-preview' action teardown, add default event types + closed event type
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
+    paths:
+      - '.github/actions/build/**/*'
+      - '.github/workflows/deploy-pr-preview.yml'
+      - 'src/**/*'
+      - '.nvmrc'
+      - 'index.html'
+      - 'package.json'
+      - 'package-lock.json'
+
+jobs:
+  demo_preview: # keep unique across jobs using surge preview (preview url and PR comment id)
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write # surge-preview: PR comments
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        uses: ./.github/actions/build
+        if: github.event.action != 'closed'
+        with:
+          npm-script: 'build-for-surge'
+      - uses: bonitasoft/actions/packages/surge-preview-tools@v1
+        id: surge-preview-tools
+        with:
+          surge-token: ${{ secrets.SURGE_TOKEN }}
+      - name: Manage surge preview
+        if: steps.surge-preview-tools.outputs.can-run-surge-command == 'true'
+        uses: afc163/surge-preview@v1
+        with:
+          surge_token: ${{ secrets.SURGE_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dist: './dist'
+          failOnError: true
+          teardown: 'true'
+          build: echo 'already built!'
