@@ -9,31 +9,40 @@ const happyPath = [
   "Event_1vogvxc",
   "Flow_0i9hf3x",
   "Gateway_0xh0plz",
+  // activate paths after the first parallel gateway
   "Flow_06ca3ya",
   "Activity_0ec8azh",
-  "Flow_1y1kscn",
-  "Gateway_0apcz1e",
-  "Flow_1ojqrz1",
-  "Activity_1t65hvk",
-  "Flow_1a9zw3d",
   "Flow_169iupn",
   "Event_0e43ncy",
-  "Flow_0hpz0ab",
+  "Flow_1ojqrz1",
+  "Activity_1t65hvk",
+  // activate the path after subprocess
+  "Flow_1y1kscn",
+  "Gateway_0apcz1e",
+  // Record Goods Receipt
   "Flow_1448s6h",
   "Activity_00vbm9s",
-  "Flow_14tr1q9",
+  // gateway after parallel
   "Flow_0j5xinh",
   "Gateway_08gf298",
+  // end "Create Purchase Order Item" branch
+  "Flow_1a9zw3d",
+  // end "Service Entry Sheet Needed?" branch
   "Flow_0wd8pwa",
   "Gateway_0jqn9hp",
   "Flow_1nxinu7",
+  // end "Vendor Create Invoice" branch
+  "Flow_0hpz0ab",
+  // end "Record Goods Receipts" branch
+  "Flow_14tr1q9",
+  // finalize the Subprocess path
   "Gateway_01gpztl",
   "Flow_19cdedl",
-  "Flow_06uo70h",
+  // Finalize the 1st part of the path
   "Gateway_0domayw",
+  // Last path elements
   "Flow_06uo70h",
   "Activity_1u4jwkv",
-  "Flow_0lrixjg",
   "Flow_0lrixjg",
   "Gateway_0a68dfj",
   "Flow_1lkft1n",
@@ -46,8 +55,9 @@ const happyPath = [
 
 const happyPathElementWithOverlays = "Event_1vogvxc";
 
-const animationDuration = 1;
-const animationDurationOfEdgeArrow = 0.3;
+const speedFactor = 1; // For now, it is only used while debugging to accelerate the animation. In the future, it could be used to let user choose the animation speed.
+const animationDuration = speedFactor;
+const animationDurationOfEdgeArrow = 0.3 * speedFactor;
 
 const animationDelay = animationDuration / 2;
 const animationDurationOfEdgeLine = animationDuration - animationDurationOfEdgeArrow;
