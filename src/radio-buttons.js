@@ -5,10 +5,10 @@ import { hideComplianceRules, showComplianceRules } from "./compliance-rules";
 /**
  * @param {BpmnVisualization} bpmnVisualization
  */
-export function configureButtons(bpmnVisualization) {
-    let happyPathButton = new RuleButton("happy_path", () => showHappyPath(bpmnVisualization), () => hideHappyPath(bpmnVisualization));
-    let conformanceDataButton = new RuleButton("conformance_data", () => showConformanceData(bpmnVisualization), () => hideConformanceData(bpmnVisualization));
-    let complianceRulesButton = new RuleButton("compliance_rules", () => showComplianceRules(bpmnVisualization), () => hideComplianceRules(bpmnVisualization));
+export function configureRadioButtons(bpmnVisualization) {
+    let happyPathButton = new KPIRadioButton("happy_path", () => showHappyPath(bpmnVisualization), () => hideHappyPath(bpmnVisualization));
+    let conformanceDataButton = new KPIRadioButton("conformance_data", () => showConformanceData(bpmnVisualization), () => hideConformanceData(bpmnVisualization));
+    let complianceRulesButton = new KPIRadioButton("compliance_rules", () => showComplianceRules(bpmnVisualization), () => hideComplianceRules(bpmnVisualization));
 
     const hideAllCallback = () => {
         happyPathButton.hide();
@@ -23,7 +23,7 @@ export function configureButtons(bpmnVisualization) {
     document.getElementById("reset_all").addEventListener("click", hideAllCallback);
 }
 
-class RuleButton {
+class KPIRadioButton {
     constructor(id, showCallback, hideCallback) {
         this.button = document.getElementById(id);
         this.dataAreShowed = false;

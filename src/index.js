@@ -1,7 +1,7 @@
 import { BpmnVisualization, FitType } from "bpmn-visualization";
 
 import collapsedDiagram from "./diagrams/EC-purchase-orders-collapsed.bpmn?raw";
-import { configureButtons } from "./buttons";
+import { configureRadioButtons } from "./radio-buttons";
 import { loadBpmnDiagram } from "./diagram";
 
 // https://stackoverflow.com/questions/49338193/how-to-use-code-from-script-with-type-module
@@ -26,7 +26,7 @@ mainBpmnVisualization.bpmnElementsRegistry.addCssClasses(subProcessId, 'c-hand')
 
 
 
-configureButtons(mainBpmnVisualization);
+configureRadioButtons(mainBpmnVisualization);
 
 // display the bpmn-visualization version in the footer
 const footer = document.querySelector("footer");
