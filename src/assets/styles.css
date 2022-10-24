@@ -1,3 +1,13 @@
+:root {
+  /* Happy Path */
+  --color-highlight-happy: Green;
+  --happy-path-stroke-width: .2rem;
+  /* Compliance Rules: Violations */
+  --color-highlight-violation-level1: rgb(252, 3, 3);
+  --color-highlight-violation-level2: rgb(252, 86, 3);
+  --color-highlight-violation-level3: rgb(252, 144, 3);
+}
+
 html {
   font-family: sans-serif;
 }
@@ -27,15 +37,16 @@ footer {
   background-color: white;
 }
 
-:root {
-  /* Happy Path */
-  --color-highlight-happy: Green;
-  --happy-path-stroke-width: .2rem;
-  /* Compliance Rules: Violations */
-  --color-highlight-violation-level1: rgb(252, 3, 3);
-  --color-highlight-violation-level2: rgb(252, 86, 3);
-  --color-highlight-violation-level3: rgb(252, 144, 3);
+/* ****************************************************************************************************************** */
+/* Control */
+/* ****************************************************************************************************************** */
+#control {
+  border-radius: .5rem;
 }
+
+/* ****************************************************************************************************************** */
+/* KPI: Compliance Rules */
+/* ****************************************************************************************************************** */
 
 /* ripple circles */
 .bpmn-type-activity.rule-violation > circle {
@@ -64,67 +75,9 @@ footer {
   }
 }
 
-/*.bpmn-type-activity.highlight-rule-violation-level1 > rect {
-  fill: var(--color-highlight-violation-level1);
-  fill-opacity: 20%;
-  stroke: var(--color-highlight-violation-level1);
-}
-
-.bpmn-type-activity.highlight-rule-violation-level2 > rect {
-  fill: var(--color-highlight-violation-level2) !important;
-  fill-opacity: 20% !important;
-  stroke: var(--color-highlight-violation-level2);
-}
-
-.bpmn-type-activity.highlight-rule-violation-level3 > rect {
-  fill: var(--color-highlight-violation-level3) !important;
-  fill-opacity: 20% !important;
-  stroke: var(--color-highlight-violation-level3);
-}*/
-
-/*pulse CSS */
-/*.bpmn-type-activity.pulse-rule-violation-level1 > rect {
-  animation: pulse-violation-level1 2s alternate infinite;
-}
-
-.bpmn-type-activity.pulse-rule-violation-level2 > rect {
-  animation: pulse-violation-level2 2s alternate infinite;
-}
-
-.bpmn-type-activity.pulse-rule-violation-level3 > rect {
-  animation: pulse-violation-level3 2s alternate infinite;
-}
-
-@keyframes pulse-violation-level1 {
-  0% {
-    fill: #ffffff;
-    stroke: var(--color-highlight-violation-level1);
-  }
-  50% {
-    fill: var(--color-highlight-violation-level1);
-  }
-}
-
-@keyframes pulse-violation-level2 {
-  0% {
-    fill: #ffffff;
-    stroke: var(--color-highlight-violation-level2);
-  }
-  50% {
-    fill: var(--color-highlight-violation-level2);
-  }
-}
-
-@keyframes pulse-violation-level3 {
-  0% {
-    fill: #ffffff;
-    stroke: var(--color-highlight-violation-level3);
-  }
-  50% {
-    fill: var(--color-highlight-violation-level3);
-  }
-}*/
-
+/* ****************************************************************************************************************** */
+/* KPI: Happy path */
+/* ****************************************************************************************************************** */
 
 .bpmn-type-activity.pulse-happy > rect, .bpmn-type-event.pulse-happy > ellipse {
   animation-name: pulse-happy-path;
