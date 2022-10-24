@@ -17,7 +17,7 @@ footer {
 .bpmn-container {
   /* use absolute values for height to ensure that the vertical diagram is not fully displayed when the page is opened. */
   /* width is relative to the window size */
-  height: calc(100vh - 13rem);
+  height: calc(100vh - 11rem);
   border-style: solid;
   border-color: #303742;
   border-width: medium;

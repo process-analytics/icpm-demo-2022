@@ -10,11 +10,17 @@ export function configureButtons(bpmnVisualization) {
     let conformanceDataButton = new RuleButton("conformance_data", () => showConformanceData(bpmnVisualization), () => hideConformanceData(bpmnVisualization));
     let complianceRulesButton = new RuleButton("compliance_rules", () => showComplianceRules(bpmnVisualization), () => hideComplianceRules(bpmnVisualization));
 
-    document.getElementById("reset_all").addEventListener("click",  () => {
+    const hideAllCallback = () => {
         happyPathButton.hide();
         conformanceDataButton.hide();
         complianceRulesButton.hide();
-    });
+    }
+
+    happyPathButton.addEventListenerOnClick(hideAllCallback);
+    conformanceDataButton.addEventListenerOnClick(hideAllCallback);
+    complianceRulesButton.addEventListenerOnClick(hideAllCallback);
+
+    document.getElementById("reset_all").addEventListener("click", hideAllCallback);
 }
 
 class RuleButton {
@@ -23,26 +29,21 @@ class RuleButton {
         this.dataAreShowed = false;
         this.showCallback = showCallback;
         this.hideCallback = hideCallback;
-
-        this.addEventListenerOnClick();
     }
 
-    addEventListenerOnClick() {
-        this.button.addEventListener("click", () => this.dataAreShowed ? this.hide() : this.show());
-    }
-
-    show() {
-        if(!this.dataAreShowed) {
-            this.showCallback();
-            this.button.innerHTML = this.button.innerHTML.replace('Show', 'Hide');
-            this.dataAreShowed = true;
-        }
+    addEventListenerOnClick(hideAllCallback) {
+        this.button.addEventListener("click", () => {
+            if(!this.dataAreShowed) {
+                hideAllCallback();
+                this.showCallback();
+                this.dataAreShowed = true;
+            }
+        });
     }
 
     hide() {
         if(this.dataAreShowed) {
             this.hideCallback();
-            this.button.innerHTML = this.button.innerHTML.replace('Hide', 'Show');
             this.dataAreShowed = false;
         }
     }
