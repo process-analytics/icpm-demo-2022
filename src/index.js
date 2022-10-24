@@ -32,26 +32,3 @@ configureButtons(mainBpmnVisualization);
 const footer = document.querySelector("footer");
 const version = mainBpmnVisualization.getVersion();
 footer.innerText = `bpmn-visualization@${version.lib}`;
-
-
-/*TO BE IMPLEMENTED
-observe navigation and zooming and
-update circle ripples and linearGradient if they were added*/
-
-var containerBpmn = document.querySelector("#main-bpmn-container");
-
-var containerObserver = new MutationObserver(function (mutations) {
-  mutations.forEach(function (mutation) {
-    if (mutation.type === "attributes") {
-      //check if ripple circles exist
-      //if yes, recall ripple function
-      //check if Gradient exists
-      //if yes, re-add them
-    }
-  });
-});
-
-containerObserver.observe(containerBpmn, {
-  attributes: true, //configure it to listen to attribute changes
-  attributeFilter: ["min-width", "min-height"] // filter your attributes
-});
