@@ -1,4 +1,4 @@
-import { BpmnVisualization } from "bpmn-visualization";
+import { BpmnVisualization, FitType } from "bpmn-visualization";
 
 import collapsedDiagram from "./diagrams/EC-purchase-orders-collapsed.bpmn?raw";
 import { configureButtons } from "./buttons";
@@ -10,12 +10,11 @@ window.loadBpmnDiagram = loadBpmnDiagram;
 // 'bpmn-visualization' API documentation: https://process-analytics.github.io/bpmn-visualization-js/api/index.html
 const mainBpmnVisualization = new BpmnVisualization({
   container: 'main-bpmn-container',
-  navigation: { enabled: true } // remove this line or set to false if you don't want to use Diagram Navigation
 });
 
 // Load BPMN diagram
 // Try the "Center" type to fit the whole container and center the diagram
-mainBpmnVisualization.load(collapsedDiagram, { fit: { type: "Center", margin: 10 } });
+mainBpmnVisualization.load(collapsedDiagram, { fit: { type: FitType.Center, margin: 10 } });
 
 
 // Interaction
@@ -33,26 +32,3 @@ configureButtons(mainBpmnVisualization);
 const footer = document.querySelector("footer");
 const version = mainBpmnVisualization.getVersion();
 footer.innerText = `bpmn-visualization@${version.lib}`;
-
-
-/*TO BE IMPLEMENTED
-observe navigation and zooming and
-update circle ripples and linearGradient if they were added*/
-
-var containerBpmn = document.querySelector("#main-bpmn-container");
-
-var containerObserver = new MutationObserver(function (mutations) {
-  mutations.forEach(function (mutation) {
-    if (mutation.type === "attributes") {
-      //check if ripple circles exist
-      //if yes, recall ripple function
-      //check if Gradient exists
-      //if yes, re-add them
-    }
-  });
-});
-
-containerObserver.observe(containerBpmn, {
-  attributes: true, //configure it to listen to attribute changes
-  attributeFilter: ["min-width", "min-height"] // filter your attributes
-});
