@@ -94,16 +94,8 @@ export function showConformanceData(bpmnVisualization) {
   //record goods receipts: incoming and outgoing
   addEdgeOverlay("Flow_1448s6h", bpmnVisualization);
   addEdgeOverlay("Flow_14tr1q9", bpmnVisualization);
-  //incming of exclusive gateway of service entry sheet needed?
-  //addEdgeOverlay("Flow_0j5xinh", bpmnVisualization);
-  //record service entry sheet: outgoing
-  //addEdgeOverlay("Flow_0pu7ps3", bpmnVisualization);
-  //record invoice receipt: outgoing
-  //addEdgeOverlay("Flow_0lrixjg", bpmnVisualization);
   //remove payment block: outgoing
   addEdgeOverlay("Flow_1vzcv72", bpmnVisualization);
-  //clear invoice: outgoing
-  //addEdgeOverlay("Flow_12q12yb", bpmnVisualization);
 }
 
 /**
@@ -114,29 +106,18 @@ export function showConformanceData(bpmnVisualization) {
  */
 function addOverlay(elementId, overlayType, label, bpmnVisualization) {
   if (overlayType === "synchronous") {
-    if (label !== false){
-      bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
-        position: "top-left",
-        label: label,
-        ...overlayConfigSynchronous,
-      });
-    }
+    bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
+      position: "top-left",
+      label: label,
+      ...overlayConfigSynchronous,
+    });
   } else if (overlayType === "modelMove") {
-    if(label != false){
-      bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
-        position: "top-right",
-        label: label,
-        ...overlayConfigModelMove,
-      });
-    }
-  }
-  /*else if (overlayType === "logMove") {
     bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
       position: "top-right",
       label: label,
-      ...overlayConfigLogMove,
+      ...overlayConfigModelMove,
     });
-  }*/
+  }
 }
 
 function addEdgeOverlay(elementId, bpmnVisualization) {
@@ -145,14 +126,6 @@ function addEdgeOverlay(elementId, bpmnVisualization) {
     label: "🟨",
     ...overlayConfigLogMove,
   });
-
-  /*else if (overlayType === "logMove") {
-    bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
-      position: "top-right",
-      label: label,
-      ...overlayConfigLogMove,
-    });
-  }*/
 }
 
 /**
@@ -268,13 +241,6 @@ function deleteLinearGradient(bpmnVisualization) {
     const parent = element.parentNode;
     parent.removeChild(element);
   }
-
-  /* const activitySvgElement =
-    bpmnVisualization.bpmnElementsRegistry.getElementsByIds(
-      "Activity_0ec8azh"
-    )[0].htmlElement;
-  activitySvgElement.children[0].setAttribute("fill", "white");
-  */
 }
 
 function computeRatioList(stopsFrequencyList) {
