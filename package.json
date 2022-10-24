@@ -11,7 +11,6 @@
     "build-for-surge": "vite build"
   },
   "dependencies": {
-    "animejs": "3.2.1",
     "bpmn-visualization": "0.27.1",
     "spectre.css": "0.5.9",
     "tippy.js": "6.3.7"
