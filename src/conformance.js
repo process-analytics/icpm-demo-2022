@@ -2,7 +2,7 @@ import { ShapeBpmnElementKind, FlowKind } from "bpmn-visualization";
 const overlayConfigSynchronous = {
   style: {
     font: {
-      color: "black",
+      color: "#002000",
       size: 18,
     },
     stroke: {
@@ -32,7 +32,7 @@ const overlayConfigLogMove = {
 const overlayConfigModelMove = {
   style: {
     font: {
-      color: "black",
+      color: "white",
       size: 18,
     },
     stroke: {
