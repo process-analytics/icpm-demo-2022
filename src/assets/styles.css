@@ -28,7 +28,10 @@ footer {
 }
 
 :root {
+  /* Happy Path */
   --color-highlight-happy: Green;
+  --happy-path-stroke-width: .2rem;
+  /* Compliance Rules: Violations */
   --color-highlight-violation-level1: rgb(252, 3, 3);
   --color-highlight-violation-level2: rgb(252, 86, 3);
   --color-highlight-violation-level3: rgb(252, 144, 3);
@@ -140,13 +143,13 @@ footer {
   }
   100% {
     stroke: var(--color-highlight-happy);
-    stroke-width: .2rem;
+    stroke-width: var(--happy-path-stroke-width);
   }
 }
 
 .gateway-happy > path, .growing-happy > path {
   --stroke: var(--color-highlight-happy);
-  --stroke-width: .2rem;
+  --stroke-width: var(--happy-path-stroke-width);
   --fillStart: white;
   --fillEnd: white;
   animation-name: grow;
