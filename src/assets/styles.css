@@ -12,6 +12,10 @@ html {
   font-family: sans-serif;
 }
 
+body {
+  background-color: #f4f4f7;
+}
+
 footer {
   margin-right: 2rem;
   margin-top: 1.5rem;
@@ -24,13 +28,15 @@ footer {
   white-space: inherit;
 }
 
+.divider {
+  /* Override class of Spectre CSS. To be declare after Spectre CSS to override it*/
+  border-color: #7a7a8b;
+}
+
 .bpmn-container {
   /* use absolute values for height to ensure that the vertical diagram is not fully displayed when the page is opened. */
   /* width is relative to the window size */
   height: calc(100vh - 11rem);
-  border-style: solid;
-  border-color: #303742;
-  border-width: medium;
   border-radius: .3rem;
   /* This ensures that the parts of the diagram outside of the container are not displayed. */
   overflow: hidden;
@@ -41,7 +47,7 @@ footer {
 /* Control */
 /* ****************************************************************************************************************** */
 #control {
-  border-radius: .5rem;
+  border-radius: .3rem;
 }
 
 /* ****************************************************************************************************************** */
