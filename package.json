@@ -7,7 +7,8 @@
   "scripts": {
     "start": "vite",
     "build": "vite build --base=/icpm-demo-2022/",
-    "preview": "vite preview --base /icpm-demo-2022/ --open"
+    "preview": "vite preview --base /icpm-demo-2022/ --open",
+    "build-for-surge": "vite build"
   },
   "dependencies": {
     "animejs": "3.2.1",

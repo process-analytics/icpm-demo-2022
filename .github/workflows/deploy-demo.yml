@@ -5,7 +5,14 @@ on:
   # Triggers the workflow on push event but only for the "main" branch
   push:
     branches: [ "main" ]
-
+    paths:
+      - '.github/actions/build/**/*'
+      - '.github/workflows/deploy-demo.yml'
+      - 'src/**/*'
+      - '.nvmrc'
+      - 'index.html'
+      - 'package.json'
+      - 'package-lock.json'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -24,20 +31,10 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
-
       - name: Build
-        run: npm run build
+        uses: ./.github/actions/build
 
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
