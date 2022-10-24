@@ -2,11 +2,11 @@ import { ShapeBpmnElementKind, FlowKind } from "bpmn-visualization";
 const overlayConfigSynchronous = {
   style: {
     font: {
-      color: "black",
-      size: 16,
+      color: "#002000",
+      size: 18,
     },
     stroke: {
-      color: "black",
+      color: "#00FF00",
     },
     fill: {
       color: "#00FF00",
@@ -18,13 +18,13 @@ const overlayConfigLogMove = {
   style: {
     font: {
       color: "black",
-      size: 16,
+      size: 18,
     },
     stroke: {
-      color: "black",
+      color: "transparent",
     },
     fill: {
-      color: "yellow",
+      color: "transparent",
     },
   },
 };
@@ -32,11 +32,11 @@ const overlayConfigLogMove = {
 const overlayConfigModelMove = {
   style: {
     font: {
-      color: "black",
-      size: 16,
+      color: "white",
+      size: 18,
     },
     stroke: {
-      color: "black",
+      color: "#FF00FF",
     },
     fill: {
       color: "#FF00FF",
@@ -94,16 +94,8 @@ export function showConformanceData(bpmnVisualization) {
   //record goods receipts: incoming and outgoing
   addEdgeOverlay("Flow_1448s6h", bpmnVisualization);
   addEdgeOverlay("Flow_14tr1q9", bpmnVisualization);
-  //incming of exclusive gateway of service entry sheet needed?
-  addEdgeOverlay("Flow_0j5xinh", bpmnVisualization);
-  //record service entry sheet: outgoing
-  addEdgeOverlay("Flow_0pu7ps3", bpmnVisualization);
-  //record invoice receipt: outgoing
-  addEdgeOverlay("Flow_0lrixjg", bpmnVisualization);
   //remove payment block: outgoing
   addEdgeOverlay("Flow_1vzcv72", bpmnVisualization);
-  //clear invoice: outgoing
-  addEdgeOverlay("Flow_12q12yb", bpmnVisualization);
 }
 
 /**
@@ -126,29 +118,14 @@ function addOverlay(elementId, overlayType, label, bpmnVisualization) {
       ...overlayConfigModelMove,
     });
   }
-  /*else if (overlayType === "logMove") {
-    bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
-      position: "top-right",
-      label: label,
-      ...overlayConfigLogMove,
-    });
-  }*/
 }
 
 function addEdgeOverlay(elementId, bpmnVisualization) {
   bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
     position: "middle",
-    label: "💥",
+    label: "🟨",
     ...overlayConfigLogMove,
   });
-
-  /*else if (overlayType === "logMove") {
-    bpmnVisualization.bpmnElementsRegistry.addOverlays(elementId, {
-      position: "top-right",
-      label: label,
-      ...overlayConfigLogMove,
-    });
-  }*/
 }
 
 /**
@@ -264,13 +241,6 @@ function deleteLinearGradient(bpmnVisualization) {
     const parent = element.parentNode;
     parent.removeChild(element);
   }
-
-  /* const activitySvgElement =
-    bpmnVisualization.bpmnElementsRegistry.getElementsByIds(
-      "Activity_0ec8azh"
-    )[0].htmlElement;
-  activitySvgElement.children[0].setAttribute("fill", "white");
-  */
 }
 
 function computeRatioList(stopsFrequencyList) {
