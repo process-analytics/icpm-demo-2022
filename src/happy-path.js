@@ -108,17 +108,15 @@ export function showHappyPath(bpmnVisualization) {
 
   bpmnVisualization.bpmnElementsRegistry.addOverlays(
       happyPathElementWithOverlays,
-      [
-        {
-          position: "top-left",
-          label: "45 traces \n (7.36%) \n ⏳ 2.08 months",
-          style: {
-            font: { color: "green", size: 14 },
-            fill: { color: "White", opacity: 40 },
-            stroke: { color: "black", width: 0 },
-          },
+      {
+        position: "top-center",
+        label: "45 traces \n (7.36%) \n ⏳ 2.08 months",
+        style: {
+          font: {color: "green", size: 14},
+          fill: {color: "White", opacity: 40},
+          stroke: {color: "black", width: 0},
         },
-      ]
+      }
   );
 }
 
