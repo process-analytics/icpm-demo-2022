@@ -1,17 +1,17 @@
-import tippy, {sticky} from "tippy.js";
-import "tippy.js/dist/tippy.css";
+import tippy, { sticky } from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
 
 const tippyInstances = [];
 
 // tippy global configuration
 tippy.setDefaultProps({
-  content: "Loading...",
+  content: 'Loading...',
   allowHTML: true,
   onShow(instance) {
     instance.setContent(getContent(instance.reference));
   },
   onHidden(instance) {
-    instance.setContent("Loading...");
+    instance.setContent('Loading...');
   },
 
   // don't consider `data-tippy-*` attributes on the reference element as we fully manage tippy with javascript
@@ -44,22 +44,21 @@ tippy.setDefaultProps({
   // moveTransition: 'transform 0.2s ease-out',
 });
 
-
 const complianceRulesCssClassnames = [
-  "rule-violation", // animation for the ripple circles
-  "c-hand" // Set the cursor to mark the elements as clickable
+  'rule-violation', // animation for the ripple circles
+  'c-hand', // Set the cursor to mark the elements as clickable
 ];
 
 /**
  * @param {BpmnVisualization} bpmnVisualization
  */
 export function showComplianceRules(bpmnVisualization) {
-  const activities = ["Activity_0yabbur", "Activity_1u4jwkv"];
+  const activities = ['Activity_0yabbur', 'Activity_1u4jwkv'];
   // this must be called first, prior adding ripple circles (which is managed by making custom svg manipulation) as mxGraph will repaint the elements
   bpmnVisualization.bpmnElementsRegistry.addCssClasses(activities, complianceRulesCssClassnames);
 
   // add custom behavior on activities of the violation rules
-  activities.forEach(activityId => {
+  activities.forEach((activityId) => {
     addRippleCircles(activityId, bpmnVisualization);
     addPopover(activityId, bpmnVisualization);
   });
@@ -70,106 +69,105 @@ export function showComplianceRules(bpmnVisualization) {
  * @param {BpmnVisualization} bpmnVisualization
  */
 function addRippleCircles(activityId, bpmnVisualization) {
-  const svgHtmlElement =
-    bpmnVisualization.bpmnElementsRegistry.getElementsByIds(activityId)[0]
-      .htmlElement;
+  const svgHtmlElement = bpmnVisualization.bpmnElementsRegistry.getElementsByIds(activityId)[0]
+    .htmlElement;
 
-  var x = parseInt(svgHtmlElement.children[0].getAttribute("x"), 10);
-  var y = parseInt(svgHtmlElement.children[0].getAttribute("y"), 10);
-  var width = parseInt(svgHtmlElement.children[0].getAttribute("width"), 10);
-  var height = parseInt(svgHtmlElement.children[0].getAttribute("height"), 10);
-  x = x + Math.floor(width / 1.2);
-  y = y + Math.floor(height / 1.2);
+  let x = parseInt(svgHtmlElement.children[0].getAttribute('x'), 10);
+  let y = parseInt(svgHtmlElement.children[0].getAttribute('y'), 10);
+  const width = parseInt(svgHtmlElement.children[0].getAttribute('width'), 10);
+  const height = parseInt(svgHtmlElement.children[0].getAttribute('height'), 10);
+  x += Math.floor(width / 1.2);
+  y += Math.floor(height / 1.2);
 
   const circle1 = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "circle"
+    'http://www.w3.org/2000/svg',
+    'circle',
   );
-  circle1.setAttribute("class", "rp1");
-  circle1.setAttribute("cx", x);
-  circle1.setAttribute("cy", y);
-  circle1.setAttribute("r", "1");
-  circle1.setAttribute("pointer-events", "all");
-  circle1.style.stroke = "red";
-  circle1.style.fill = "none";
-  circle1.style.strokeWidth = "4px";
+  circle1.setAttribute('class', 'rp1');
+  circle1.setAttribute('cx', x);
+  circle1.setAttribute('cy', y);
+  circle1.setAttribute('r', '1');
+  circle1.setAttribute('pointer-events', 'all');
+  circle1.style.stroke = 'red';
+  circle1.style.fill = 'none';
+  circle1.style.strokeWidth = '4px';
 
   const circle2 = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "circle"
+    'http://www.w3.org/2000/svg',
+    'circle',
   );
-  circle2.setAttribute("class", "rp2");
-  circle2.setAttribute("cx", x);
-  circle2.setAttribute("cy", y);
-  circle2.setAttribute("r", "6");
-  circle2.setAttribute("pointer-events", "all");
-  circle2.style.stroke = "red";
-  circle2.style.fill = "none";
-  circle2.style.strokeWidth = "2px";
+  circle2.setAttribute('class', 'rp2');
+  circle2.setAttribute('cx', x);
+  circle2.setAttribute('cy', y);
+  circle2.setAttribute('r', '6');
+  circle2.setAttribute('pointer-events', 'all');
+  circle2.style.stroke = 'red';
+  circle2.style.fill = 'none';
+  circle2.style.strokeWidth = '2px';
 
   const circle3 = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "circle"
+    'http://www.w3.org/2000/svg',
+    'circle',
   );
-  circle3.setAttribute("class", "rp3");
-  circle3.setAttribute("cx", x);
-  circle3.setAttribute("cy", y);
-  circle3.setAttribute("r", "10");
-  circle3.setAttribute("pointer-events", "all");
-  circle3.style.stroke = "red";
-  circle3.style.fill = "none";
-  circle3.style.strokeWidth = "2px";
+  circle3.setAttribute('class', 'rp3');
+  circle3.setAttribute('cx', x);
+  circle3.setAttribute('cy', y);
+  circle3.setAttribute('r', '10');
+  circle3.setAttribute('pointer-events', 'all');
+  circle3.style.stroke = 'red';
+  circle3.style.fill = 'none';
+  circle3.style.strokeWidth = '2px';
 
   svgHtmlElement.appendChild(circle1);
   svgHtmlElement.appendChild(circle2);
   svgHtmlElement.appendChild(circle3);
 
-  /*var myanim = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "animate"
-  );
+  /* var myanim = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "animate"
+    );
 
-  myanim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
-  myanim.setAttribute("id", "myAnimation2");
-  myanim.setAttribute("attributeName", "stroke-width");
-  myanim.setAttribute("values", "5;15");
-  myanim.setAttribute("dur", "1.5s");
-  myanim.setAttribute("begin", "0s");
-  myanim.setAttribute("repeatCount", "indefinite");
-  svgHtmlElement.children[0].appendChild(myanim);
+    myanim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+    myanim.setAttribute("id", "myAnimation2");
+    myanim.setAttribute("attributeName", "stroke-width");
+    myanim.setAttribute("values", "5;15");
+    myanim.setAttribute("dur", "1.5s");
+    myanim.setAttribute("begin", "0s");
+    myanim.setAttribute("repeatCount", "indefinite");
+    svgHtmlElement.children[0].appendChild(myanim);
 
-  myanim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
-  myanim.setAttribute("id", "myAnimation6");
-  myanim.setAttribute("attributeName", "opacity");
-  myanim.setAttribute("values", "1;0");
-  myanim.setAttribute("dur", "1.5s");
-  myanim.setAttribute("begin", "0s");
-  myanim.setAttribute("repeatCount", "indefinite");
-  svgHtmlElement.appendChild(myanim);
+    myanim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+    myanim.setAttribute("id", "myAnimation6");
+    myanim.setAttribute("attributeName", "opacity");
+    myanim.setAttribute("values", "1;0");
+    myanim.setAttribute("dur", "1.5s");
+    myanim.setAttribute("begin", "0s");
+    myanim.setAttribute("repeatCount", "indefinite");
+    svgHtmlElement.appendChild(myanim);
 
-  myanim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
-  myanim.setAttribute("id", "myAnimation7");
-  myanim.setAttribute("attributeName", "width");
-  myanim.setAttribute("values", "50;100");
-  myanim.setAttribute("dur", "1.5s");
-  myanim.setAttribute("begin", "0s");
-  myanim.setAttribute("repeatCount", "indefinite");
-  svgHtmlElement.children[0].appendChild(myanim);
+    myanim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+    myanim.setAttribute("id", "myAnimation7");
+    myanim.setAttribute("attributeName", "width");
+    myanim.setAttribute("values", "50;100");
+    myanim.setAttribute("dur", "1.5s");
+    myanim.setAttribute("begin", "0s");
+    myanim.setAttribute("repeatCount", "indefinite");
+    svgHtmlElement.children[0].appendChild(myanim);
 
-  myanim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
-  myanim.setAttribute("id", "myAnimation8");
-  myanim.setAttribute("attributeName", "height");
-  myanim.setAttribute("values", "50;80");
-  myanim.setAttribute("dur", "1.5s");
-  myanim.setAttribute("begin", "0s");
-  myanim.setAttribute("repeatCount", "indefinite");
-  svgHtmlElement.children[0].appendChild(myanim);
+    myanim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+    myanim.setAttribute("id", "myAnimation8");
+    myanim.setAttribute("attributeName", "height");
+    myanim.setAttribute("values", "50;80");
+    myanim.setAttribute("dur", "1.5s");
+    myanim.setAttribute("begin", "0s");
+    myanim.setAttribute("repeatCount", "indefinite");
+    svgHtmlElement.children[0].appendChild(myanim);
 
-  document.getElementById("myAnimation1").beginElement();
-  document.getElementById("myAnimation2").beginElement();
-  document.getElementById("myAnimation6").beginElement();
-  document.getElementById("myAnimation7").beginElement();
-  document.getElementById("myAnimation8").beginElement();*/
+    document.getElementById("myAnimation1").beginElement();
+    document.getElementById("myAnimation2").beginElement();
+    document.getElementById("myAnimation6").beginElement();
+    document.getElementById("myAnimation7").beginElement();
+    document.getElementById("myAnimation8").beginElement(); */
 }
 
 /**
@@ -183,7 +181,7 @@ function addPopover(activityId, bpmnVisualization) {
 
   const tippyInstance = tippy(activity.htmlElement, {
     plugins: [sticky],
-    theme: "violation",
+    theme: 'violation',
     // sticky option behavior with this appendTo
     // The following is only needed to manage diagram navigation
     // Current issue while pan, the dimension of the popper changed while dragging which may also wrongly trigger a flip
@@ -201,21 +199,21 @@ function addPopover(activityId, bpmnVisualization) {
     // when using this, no resize issue on pan, but no more flip nor overflow. We can however use sticky: 'reference' with is better
     // It is almost ok when trigger on mouse over/focus as even if there is still an overflow issue, the tooltip disappear right
     // after the bpmn element is no more displayed after overflow
-    //appendTo: bpmnContainerElt.parentElement,
+    // appendTo: bpmnContainerElt.parentElement,
 
     // https://atomiks.github.io/tippyjs/v6/all-props/#sticky
     // This has a performance cost since checks are run on every animation frame. Use this only when necessary!
     // enable it
-    //sticky: true,
+    // sticky: true,
     // only check the "reference" rect for changes
-    sticky: "reference",
+    sticky: 'reference',
     // only check the "popper" rect for changes
-    //sticky: "popper",
+    // sticky: "popper",
 
     duration: 400,
     delay: [200, 400],
 
-    trigger: "click",
+    trigger: 'click',
   });
 
   tippyInstances.push(tippyInstance);
@@ -228,12 +226,12 @@ function addPopover(activityId, bpmnVisualization) {
 const registeredBpmnElements = new Map();
 
 function registerBpmnElement(bpmnElement) {
-  registeredBpmnElements.set(bpmnElement.htmlElement, bpmnElement.bpmnSemantic)
+  registeredBpmnElements.set(bpmnElement.htmlElement, bpmnElement.bpmnSemantic);
 }
 
 function getContent(htmlElement) {
   const bpmnSemantic = registeredBpmnElements.get(htmlElement);
-  if (bpmnSemantic.id === "Activity_0yabbur") {
+  if (bpmnSemantic.id === 'Activity_0yabbur') {
     return `<div class="bpmn-popover">
     <b style="color:white">Precedence Rule Violation info:</b>
     <table border="1" bordercolor="white"  style="text-align:center; border-collapse:collapse;">
@@ -254,7 +252,7 @@ function getContent(htmlElement) {
 </tr>
 </table>
     </div>`;
-  } else if (bpmnSemantic.id === "Activity_1u4jwkv") {
+  } if (bpmnSemantic.id === 'Activity_1u4jwkv') {
     return `<div class="bpmn-popover">
     <b style="color:white">Precedence Rule Violation info:</b>
     <table border="1" bordercolor="white"  style="text-align:center; border-collapse:collapse;">
@@ -278,14 +276,14 @@ function getContent(htmlElement) {
  */
 export function hideComplianceRules(bpmnVisualization) {
   // unregister tippy instances
-  for (let instance of tippyInstances) {
-    instance.destroy()
+  for (const instance of tippyInstances) {
+    instance.destroy();
   }
   tippyInstances.length = 0;
 
   // remove all CSS classnames. mxGraph repaint the elements so it also remove the ripple circles
-// TODO refactor, call removeCssClasses only one
-  for (let bpmnSemantic of registeredBpmnElements.values()) {
+  // TODO refactor, call removeCssClasses only one
+  for (const bpmnSemantic of registeredBpmnElements.values()) {
     bpmnVisualization.bpmnElementsRegistry.removeCssClasses(bpmnSemantic.id, complianceRulesCssClassnames);
   }
 }
