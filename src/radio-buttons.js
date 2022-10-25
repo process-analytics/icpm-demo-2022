@@ -2,36 +2,36 @@ import { hideHappyPath, showHappyPath } from "./happy-path";
 import { hideConformanceData, showConformanceData } from "./conformance";
 import { hideComplianceRules, showComplianceRules } from "./compliance-rules";
 
-let checkedKPIRadioButton = null;
+let checkedRadioButton = null;
 
 /**
  * @param {BpmnVisualization} bpmnVisualization
  */
 export function configureRadioButtons(bpmnVisualization) {
-    new KPIRadioButton("happy_path", () => showHappyPath(bpmnVisualization), () => hideHappyPath(bpmnVisualization));
-    new KPIRadioButton("conformance_data", () => showConformanceData(bpmnVisualization), () => hideConformanceData(bpmnVisualization));
-    new KPIRadioButton("compliance_rules", () => showComplianceRules(bpmnVisualization), () => hideComplianceRules(bpmnVisualization));
+    new RadioButton("happy_path", () => showHappyPath(bpmnVisualization), () => hideHappyPath(bpmnVisualization));
+    new RadioButton("conformance_data", () => showConformanceData(bpmnVisualization), () => hideConformanceData(bpmnVisualization));
+    new RadioButton("compliance_rules", () => showComplianceRules(bpmnVisualization), () => hideComplianceRules(bpmnVisualization));
 
-    document.getElementById("reset_all").addEventListener("click", () => checkedKPIRadioButton?.hide());
+    document.getElementById("reset_all").addEventListener("click", () => checkedRadioButton?.hide());
 }
 
-class KPIRadioButton {
+class RadioButton {
     constructor(id, showCallback, hideCallback) {
         this.hideCallback = hideCallback;
 
         document.getElementById(id).addEventListener("click", function(){
-            if(checkedKPIRadioButton != this) {
-                checkedKPIRadioButton?.hide();
+            if(checkedRadioButton != this) {
+                checkedRadioButton?.hide();
                 showCallback();
-                checkedKPIRadioButton = this;
+                checkedRadioButton = this;
             }
         }.bind(this));
     }
 
     hide() {
-        if(checkedKPIRadioButton == this) {
+        if(checkedRadioButton == this) {
             this.hideCallback();
-            checkedKPIRadioButton = null;
+            checkedRadioButton = null;
         }
     }
 }
