@@ -16,6 +16,10 @@ body {
   background-color: #f4f4f7;
 }
 
+header {
+  background-color: #212051;
+}
+
 footer {
   margin-right: 2rem;
   margin-top: 1.5rem;
@@ -28,15 +32,29 @@ footer {
   white-space: inherit;
 }
 
-.divider {
+.breadcrumb .breadcrumb-item:not(:last-child) a {
   /* Override class of Spectre CSS. To be declare after Spectre CSS to override it*/
-  border-color: #7a7a8b;
+/*  color: #f1f1fc;*/
+  /*color: #f7f8f9;*/
+  color: #b1b4b8;
+/*  color: #cbcdd0;*/
 }
 
+.breadcrumb .breadcrumb-item:last-child a:visited {
+  /* Override class of Spectre CSS. To be declare after Spectre CSS to override it*/
+ /* color: #807fe2;*/
+  /*color: #a09fe9;*/
+/*  color: #b0afed;*/
+  color: #c0bff0;
+}
+
+/* ****************************************************************************************************************** */
+/* BPMN Container */
+/* ****************************************************************************************************************** */
 .bpmn-container {
   /* use absolute values for height to ensure that the vertical diagram is not fully displayed when the page is opened. */
   /* width is relative to the window size */
-  height: calc(100vh - 11rem);
+  height: calc(100vh - 12rem);
   border-radius: .3rem;
   /* This ensures that the parts of the diagram outside of the container are not displayed. */
   overflow: hidden;
