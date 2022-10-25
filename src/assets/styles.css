@@ -13,11 +13,11 @@ html {
 }
 
 body {
-  background-color: #f4f4f7;
+  background-color: #f9f9fa;
 }
 
 header {
-  background-color: #212051;
+  background-color: #f1f3f5;
 }
 
 footer {
@@ -32,20 +32,9 @@ footer {
   white-space: inherit;
 }
 
-.breadcrumb .breadcrumb-item:not(:last-child) a {
+.divider {
   /* Override class of Spectre CSS. To be declare after Spectre CSS to override it*/
-/*  color: #f1f1fc;*/
-  /*color: #f7f8f9;*/
-  color: #b1b4b8;
-/*  color: #cbcdd0;*/
-}
-
-.breadcrumb .breadcrumb-item:last-child a:visited {
-  /* Override class of Spectre CSS. To be declare after Spectre CSS to override it*/
- /* color: #807fe2;*/
-  /*color: #a09fe9;*/
-/*  color: #b0afed;*/
-  color: #c0bff0;
+  border-color: #d3d5d6;
 }
 
 /* ****************************************************************************************************************** */
