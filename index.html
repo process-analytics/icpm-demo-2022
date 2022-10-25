@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <title>ICP demo 2022 based on BPI 2019</title>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <link rel="icon" type="image/svg+xml" href="src/assets/favicon.svg">
     <!-- The documentation of Spectre CSS: https://github.com/picturepan2/spectre -->
     <link rel="stylesheet" href="node_modules/spectre.css/dist/spectre.min.css">
@@ -17,23 +17,40 @@
                 <a href="#" onclick="loadBpmnDiagram('main')">Purchase orders</a>
             </li>
         </ul>
-       <div class="divider"></div>
+        <div class="divider"></div>
     </div>
 </header>
 <body>
 <section class="container text-capitalize mt-2">
     <div class="columns col-11 col-mx-auto">
-        <div class="col-12 mb-2">
+        <div class="col-12 my-2">
             <div id="main-bpmn-container" class="bpmn-container"></div>
             <div id="secondary-bpmn-container" class="bpmn-container d-hide"></div>
         </div>
 
-        <div id="panel" class="col-6 col-mx-auto d-flex" style="flex-direction: column; align-items: center">
-            <button id="reset_all" class="btn btn-error btn-lg btn-block my-2">Reset</button>
-            <div class="col-12 d-flex my-2" style="flex-direction: row; justify-content: space-between">
-                <button id="conformance_data" class="btn" style="width:30%">Show conformance data</button>
-                <button id="compliance_rules" class="btn" style="width:30%">Show compliance rules</button>
-                <button id="happy_path" class="btn" style="width:30%">Show happy path</button>
+        <div id="control" class="col-12 col-mx-auto form-horizontal bg-secondary mt-2 pt-2 pb-2">
+            <div class="form-group">
+                <div class="col-auto col-sm-10 mr-2" style="margin-left: auto">
+                    <label class="form-label label-lg text-bold">Use case</label>
+                </div>
+                <div class="col-auto col-sm-10 ml-2" style="margin-right: auto">
+                    <label class="form-radio form-inline input-lg">
+                        <input id="reset_all" type="radio" name="use_case" value="reset_all" checked>
+                        <i class="form-icon"></i> None
+                    </label>
+                    <label class="form-radio form-inline input-lg">
+                        <input id="conformance_data" type="radio" value="conformance_data" name="use_case">
+                        <i class="form-icon"></i> Conformance data
+                    </label>
+                    <label class="form-radio form-inline input-lg">
+                        <input id="compliance_rules" type="radio" name="use_case" value="compliance_rules">
+                        <i class="form-icon"></i> Compliance rules
+                    </label>
+                    <label class="form-radio form-inline input-lg">
+                        <input id="happy_path" type="radio" name="use_case" value="happy_path">
+                        <i class="form-icon"></i> Happy path
+                    </label>
+                </div>
             </div>
         </div>
     </div>
