@@ -14,7 +14,7 @@ const mainBpmnVisualization = new BpmnVisualization({
 
 // Load BPMN diagram
 // Try the "Center" type to fit the whole container and center the diagram
-mainBpmnVisualization.load(collapsedDiagram, { fit: { type: FitType.Center, margin: 10 } });
+mainBpmnVisualization.load(collapsedDiagram, { fit: { type: FitType.Center, margin: 20 } });
 
 
 // Interaction
