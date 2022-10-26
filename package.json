@@ -1,9 +1,7 @@
 {
   "name": "icpm-demo-2022",
   "private": true,
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.html",
+  "version": "0.0.0",
   "scripts": {
     "start": "vite",
     "build": "vite build --base=/icpm-demo-2022/",
@@ -17,6 +15,5 @@
   },
   "devDependencies": {
     "vite": "~3.1.8"
-  },
-  "keywords": []
+  }
 }
