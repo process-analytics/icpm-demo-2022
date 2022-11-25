@@ -1,53 +1,53 @@
 :root {
-  /* Happy Path */
-  --color-highlight-happy: Green;
-  --happy-path-stroke-width: .2rem;
-  /* Compliance Rules: Violations */
-  --color-highlight-violation-level1: rgb(252, 3, 3);
-  --color-highlight-violation-level2: rgb(252, 86, 3);
-  --color-highlight-violation-level3: rgb(252, 144, 3);
+    /* Happy Path */
+    --color-highlight-happy: Green;
+    --happy-path-stroke-width: .2rem;
+    /* Compliance Rules: Violations */
+    --color-highlight-violation-level1: rgb(252, 3, 3);
+    --color-highlight-violation-level2: rgb(252, 86, 3);
+    --color-highlight-violation-level3: rgb(252, 144, 3);
 }
 
 html {
-  font-family: sans-serif;
+    font-family: sans-serif;
 }
 
 body {
-  background-color: #f9f9fa;
+    background-color: #f9f9fa;
 }
 
 header {
-  background-color: #f1f3f5;
+    background-color: #f1f3f5;
 }
 
 footer {
-  margin-right: 2rem;
-  margin-top: 1.5rem;
+    margin-right: 2rem;
+    margin-top: 1.5rem;
 }
 
 .btn {
-  /* Override class of Spectre CSS. To be declare after Spectre CSS to override it*/
-  overflow-wrap: break-word;
-  height: auto;
-  white-space: inherit;
+    /* Override class of Spectre CSS. To be declare after Spectre CSS to override it*/
+    overflow-wrap: break-word;
+    height: auto;
+    white-space: inherit;
 }
 
 .divider {
-  /* Override class of Spectre CSS. To be declare after Spectre CSS to override it*/
-  border-color: #d3d5d6;
+    /* Override class of Spectre CSS. To be declare after Spectre CSS to override it*/
+    border-color: #d3d5d6;
 }
 
 /* ****************************************************************************************************************** */
 /* BPMN Container */
 /* ****************************************************************************************************************** */
 .bpmn-container {
-  /* use absolute values for height to ensure that the vertical diagram is not fully displayed when the page is opened. */
-  /* width is relative to the window size */
-  height: calc(100vh - 11rem);
-  border-radius: .3rem;
-  /* This ensures that the parts of the diagram outside of the container are not displayed. */
-  overflow: hidden;
-  background-color: white;
+    /* use absolute values for height to ensure that the vertical diagram is not fully displayed when the page is opened. */
+    /* width is relative to the window size */
+    height: calc(100vh - 11rem);
+    border-radius: .3rem;
+    /* This ensures that the parts of the diagram outside of the container are not displayed. */
+    overflow: hidden;
+    background-color: white;
 }
 
 /* ****************************************************************************************************************** */
@@ -56,29 +56,32 @@ footer {
 
 /* ripple circles */
 .bpmn-type-activity.rule-violation > circle {
-  stroke-opacity: 0;
-  animation: pulse-rule-violation 2s linear infinite;
+    stroke-opacity: 0;
+    animation: pulse-rule-violation 2s linear infinite;
 }
 
 .bpmn-type-activity.rule-violation > circle.rp1 {
-  animation-delay: 0.5s;
+    animation-delay: 0.5s;
 }
+
 .bpmn-type-activity.rule-violation > circle.rp2 {
-  animation-delay: 0.7s;
+    animation-delay: 0.7s;
 }
+
 .bpmn-type-activity.rule-violation > circle.rp3 {
-  animation-delay: 0.9s;
+    animation-delay: 0.9s;
 }
+
 @keyframes pulse-rule-violation {
-  0% {
-    stroke-opacity: 0.1;
-  }
-  50% {
-    stroke-opacity: 1;
-  }
-  100% {
-    stroke-opacity: 0.1;
-  }
+    0% {
+        stroke-opacity: 0.1;
+    }
+    50% {
+        stroke-opacity: 1;
+    }
+    100% {
+        stroke-opacity: 0.1;
+    }
 }
 
 /* ****************************************************************************************************************** */
@@ -86,71 +89,71 @@ footer {
 /* ****************************************************************************************************************** */
 
 .bpmn-type-activity.pulse-happy > rect, .bpmn-type-event.pulse-happy > ellipse {
-  animation-name: pulse-happy-path;
-  animation-iteration-count: 1;
-  animation-timing-function: ease-in;
-  animation-fill-mode: forwards;
+    animation-name: pulse-happy-path;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
 }
 
 @keyframes pulse-happy-path {
-  0% {
-    fill: rgb(0, 128, 0, .2);
-    stroke: white;
-  }
-  50% {
-    fill: white;
-  }
-  100% {
-    stroke: var(--color-highlight-happy);
-    stroke-width: var(--happy-path-stroke-width);
-  }
+    0% {
+        fill: rgb(0, 128, 0, .2);
+        stroke: white;
+    }
+    50% {
+        fill: white;
+    }
+    100% {
+        stroke: var(--color-highlight-happy);
+        stroke-width: var(--happy-path-stroke-width);
+    }
 }
 
 .gateway-happy > path, .growing-happy > path {
-  --stroke: var(--color-highlight-happy);
-  --stroke-width: var(--happy-path-stroke-width);
-  --fillStart: white;
-  --fillEnd: white;
-  animation-name: grow;
-  animation-timing-function: ease-in;
-  animation-iteration-count: 1;
-  animation-direction: normal;
-  animation-fill-mode: forwards;
+    --stroke: var(--color-highlight-happy);
+    --stroke-width: var(--happy-path-stroke-width);
+    --fillStart: white;
+    --fillEnd: white;
+    animation-name: grow;
+    animation-timing-function: ease-in;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
 }
 
 .gateway-happy > path:nth-child(1) {
-  --fillStart: rgb(0, 128, 0, .2);
-  --fillEnd: white;
+    --fillStart: rgb(0, 128, 0, .2);
+    --fillEnd: white;
 }
 
 .gateway-happy > path:nth-child(2) {
-  --stroke-width: .1rem;
-  --fillStart: var(--color-highlight-happy);
-  --fillEnd: var(--color-highlight-happy);
+    --stroke-width: .1rem;
+    --fillStart: var(--color-highlight-happy);
+    --fillEnd: var(--color-highlight-happy);
 }
 
 .growing-happy > path:nth-child(3) {
-  --fillStart: var(--color-highlight-happy);
-  --fillEnd: var(--color-highlight-happy);
+    --fillStart: var(--color-highlight-happy);
+    --fillEnd: var(--color-highlight-happy);
 }
 
 @keyframes grow {
-  from {
-    stroke-dashoffset: 100%;
-    stroke-dasharray: 100%;
-    stroke: var(--stroke);
-    stroke-width: var(--stroke-width);
-    fill: var(--fillStart);
-  }
-  to {
-    stroke-dashoffset: 0;
-    stroke: var(--stroke);
-    stroke-width: var(--stroke-width);
-    fill: var(--fillEnd);
-  }
+    from {
+        stroke-dashoffset: 100%;
+        stroke-dasharray: 100%;
+        stroke: var(--stroke);
+        stroke-width: var(--stroke-width);
+        fill: var(--fillStart);
+    }
+    to {
+        stroke-dashoffset: 0;
+        stroke: var(--stroke);
+        stroke-width: var(--stroke-width);
+        fill: var(--fillEnd);
+    }
 }
 
 .tippy-box[data-theme~="violation"] {
-  background-color: black;
-  color: yellow;
+    background-color: black;
+    color: yellow;
 }
