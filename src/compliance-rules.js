@@ -1,5 +1,7 @@
 import tippy, {sticky} from "tippy.js";
 import "tippy.js/dist/tippy.css";
+import { getElementIdByName } from "./bpmnElements";
+import { getComplianceData, getActivityComplianceData } from "./complianceData";
 
 const tippyInstances = [];
 
@@ -54,7 +56,9 @@ const complianceRulesCssClassnames = [
  * @param {BpmnVisualization} bpmnVisualization
  */
 export function showComplianceRules(bpmnVisualization) {
-  const activities = ["Activity_0yabbur", "Activity_1u4jwkv"];
+  const complianceData = getComplianceData()
+  const activityNames = Array.from(complianceData.keys());
+  const activities = activityNames.map((activityName) => {return getElementIdByName(activityName)})
   // this must be called first, prior adding ripple circles (which is managed by making custom svg manipulation) as mxGraph will repaint the elements
   bpmnVisualization.bpmnElementsRegistry.addCssClasses(activities, complianceRulesCssClassnames);
 
@@ -218,6 +222,32 @@ function addPopover(activityId, bpmnVisualization) {
     trigger: "click",
   });
 
+  // Add mouseover and mouseout event listeners to the table rows
+  tippyInstance.popper.addEventListener("mouseover", (event) => {
+    if (event.target.nodeName === "TD") {
+      event.target.parentElement.style.backgroundColor = "lightgray";
+      const selectedRow = event.target.parentElement;
+      const activityName = selectedRow.firstElementChild.textContent;
+      console.log(activityName)
+      const activityId = getElementIdByName(activityName)
+      console.log(activityId)
+      //highlight activity
+      bpmnVisualization.bpmnElementsRegistry.addCssClasses(activityId, "cause-violation")
+    }
+  });
+
+  tippyInstance.popper.addEventListener("mouseout", (event) => {
+    if (event.target.nodeName === "TD") {
+      event.target.parentElement.style.backgroundColor = "";
+      const selectedRow = event.target.parentElement;
+      const activityName = selectedRow.firstElementChild.textContent;
+      const activityId = getElementIdByName(activityName)
+      //highlight activity
+      bpmnVisualization.bpmnElementsRegistry.removeCssClasses(activityId, "cause-violation")
+      
+    }
+  });
+
   tippyInstances.push(tippyInstance);
 }
 
@@ -233,44 +263,25 @@ function registerBpmnElement(bpmnElement) {
 
 function getContent(htmlElement) {
   const bpmnSemantic = registeredBpmnElements.get(htmlElement);
-  if (bpmnSemantic.id === "Activity_0yabbur") {
-    return `<div class="bpmn-popover">
+  const activityComplianceData = getActivityComplianceData(bpmnSemantic.name)
+  let popoverData = `<div class="bpmn-popover">
     <b style="color:white">Precedence Rule Violation info:</b>
     <table border="1" bordercolor="white"  style="text-align:center; border-collapse:collapse;">
-  <tr style="color:white">
-    <th>Preceding activity</th>
-    <th>#violations</th>
-    <th>%traces</th>
-  </tr>
-  <tr>
-    <td>Record Goods Receipt</td>
-    <td>31</td>
-    <td>5.80</td>
-  </tr>
-  <tr>
-  <td>Record Invoice Receipt</td>
-  <td>3</td>
-  <td>0.67</td>
-</tr>
-</table>
-    </div>`;
-  } else if (bpmnSemantic.id === "Activity_1u4jwkv") {
-    return `<div class="bpmn-popover">
-    <b style="color:white">Precedence Rule Violation info:</b>
-    <table border="1" bordercolor="white"  style="text-align:center; border-collapse:collapse;">
-  <tr style="color:white">
-    <th>Preceding activity</th>
-    <th>#violations</th>
-    <th>%traces</th>
-  </tr>
-  <tr>
-    <td>Record Goods Receipt</td>
-    <td>55</td>
-    <td>6.88</td>
-  </tr>
-</table>
-    </div>`;
+      <tr style="color:white">
+        <th>Preceding activity</th>
+        <th>#violations</th>
+        <th>%traces</th>
+      </tr>`
+  
+  for (let key in activityComplianceData) {
+    popoverData += `<tr>`
+    popoverData += `<td>`+ key +`</td>`
+    popoverData += `<td>`+ activityComplianceData[key]["nbViolations"] +`</td>`
+    popoverData += `<td>`+ activityComplianceData[key]["percentTraces"] +`</td>`
+    popoverData += `</tr>`
   }
+  popoverData += `</table></div>`
+  return popoverData
 }
 
 /**
