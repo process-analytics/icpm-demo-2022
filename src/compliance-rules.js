@@ -225,12 +225,10 @@ function addPopover(activityId, bpmnVisualization) {
   // Add mouseover and mouseout event listeners to the table rows
   tippyInstance.popper.addEventListener("mouseover", (event) => {
     if (event.target.nodeName === "TD") {
-      event.target.parentElement.style.backgroundColor = "lightgray";
       const selectedRow = event.target.parentElement;
+      selectedRow.style.backgroundColor = "lightgray"; 
       const activityName = selectedRow.firstElementChild.textContent;
-      console.log(activityName)
       const activityId = getElementIdByName(activityName)
-      console.log(activityId)
       //highlight activity
       bpmnVisualization.bpmnElementsRegistry.addCssClasses(activityId, "cause-violation")
     }
@@ -238,13 +236,12 @@ function addPopover(activityId, bpmnVisualization) {
 
   tippyInstance.popper.addEventListener("mouseout", (event) => {
     if (event.target.nodeName === "TD") {
-      event.target.parentElement.style.backgroundColor = "";
       const selectedRow = event.target.parentElement;
+      selectedRow.style.backgroundColor = "";
       const activityName = selectedRow.firstElementChild.textContent;
       const activityId = getElementIdByName(activityName)
       //highlight activity
       bpmnVisualization.bpmnElementsRegistry.removeCssClasses(activityId, "cause-violation")
-      
     }
   });
 
