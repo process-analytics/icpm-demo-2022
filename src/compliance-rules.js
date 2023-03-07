@@ -52,11 +52,12 @@ const complianceRulesCssClassnames = [
   "c-hand" // Set the cursor to mark the elements as clickable
 ];
 
+const complianceData = getComplianceData()
+
 /**
  * @param {BpmnVisualization} bpmnVisualization
  */
 export function showComplianceRules(bpmnVisualization) {
-  const complianceData = getComplianceData()
   const activityNames = Array.from(complianceData.keys());
   const activities = activityNames.map((activityName) => {return getElementIdByName(activityName)})
   // this must be called first, prior adding ripple circles (which is managed by making custom svg manipulation) as mxGraph will repaint the elements
@@ -231,6 +232,9 @@ function addPopover(activityId, bpmnVisualization) {
       const activityId = getElementIdByName(activityName)
       //highlight activity
       bpmnVisualization.bpmnElementsRegistry.addCssClasses(activityId, "cause-violation")
+      if(complianceData.has(activityName)){
+        addRippleCircles(activityId, bpmnVisualization)
+      }
     }
   });
 
@@ -242,6 +246,9 @@ function addPopover(activityId, bpmnVisualization) {
       const activityId = getElementIdByName(activityName)
       //highlight activity
       bpmnVisualization.bpmnElementsRegistry.removeCssClasses(activityId, "cause-violation")
+      if(complianceData.has(activityName)){
+        addRippleCircles(activityId, bpmnVisualization)
+      }
     }
   });
 
