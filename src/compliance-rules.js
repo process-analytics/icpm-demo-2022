@@ -271,11 +271,11 @@ function getContent(htmlElement) {
       </tr>`
   
   for (let key in activityComplianceData) {
-    popoverData += `<tr>`
-    popoverData += `<td>`+ key +`</td>`
-    popoverData += `<td>`+ activityComplianceData[key]["nbViolations"] +`</td>`
-    popoverData += `<td>`+ activityComplianceData[key]["percentTraces"] +`</td>`
-    popoverData += `</tr>`
+    popoverData += `<tr>
+                      <td>${key}</td>
+                      <td>${activityComplianceData[key]["nbViolations"]}</td>
+                      <td>${activityComplianceData[key]["percentTraces"]}</td>
+                    </tr>`
   }
   popoverData += `</table></div>`
   return popoverData
