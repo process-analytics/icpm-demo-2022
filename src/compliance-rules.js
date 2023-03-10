@@ -232,6 +232,7 @@ function addPopover(activityId, bpmnVisualization) {
       const activityId = getElementIdByName(activityName)
       //highlight activity
       bpmnVisualization.bpmnElementsRegistry.addCssClasses(activityId, "cause-violation")
+      // workaround for https://github.com/process-analytics/icpm-demo-2022/issues/87
       if(complianceData.has(activityName)){
         addRippleCircles(activityId, bpmnVisualization)
       }
@@ -246,6 +247,7 @@ function addPopover(activityId, bpmnVisualization) {
       const activityId = getElementIdByName(activityName)
       //highlight activity
       bpmnVisualization.bpmnElementsRegistry.removeCssClasses(activityId, "cause-violation")
+      // workaround for https://github.com/process-analytics/icpm-demo-2022/issues/87
       if(complianceData.has(activityName)){
         addRippleCircles(activityId, bpmnVisualization)
       }
