@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vite",
     "build": "vite build --base ./",
-    "preview": "vite preview --base ./ --open",
+    "preview": "vite preview --base ./ --open"
   },
   "dependencies": {
     "bpmn-visualization": "0.27.1",
