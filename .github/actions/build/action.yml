@@ -1,10 +1,5 @@
 name: 'Build'
 description: 'Setup node, install dependencies and build'
-inputs:
-  npm-script:
-    description: 'The name of the npm script to run.'
-    required: false
-    default: 'build'
 
 runs:
   using: 'composite'
@@ -19,4 +14,4 @@ runs:
       run: npm ci
     - name: Build
       shell: bash
-      run: npm run ${{ inputs.npm-script }}
+      run: npm run build
