@@ -4,9 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "start": "vite",
-    "build": "vite build --base=/icpm-demo-2022/",
-    "preview": "vite preview --base /icpm-demo-2022/ --open",
-    "build-for-surge": "vite build"
+    "build": "vite build --base ./",
+    "preview": "vite preview --base ./ --open",
   },
   "dependencies": {
     "bpmn-visualization": "0.27.1",
