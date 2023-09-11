@@ -4,16 +4,15 @@
   "version": "0.0.0",
   "scripts": {
     "start": "vite",
-    "build": "vite build --base=/icpm-demo-2022/",
-    "preview": "vite preview --base /icpm-demo-2022/ --open",
-    "build-for-surge": "vite build"
+    "build": "vite build --base ./",
+    "preview": "vite preview --base ./ --open"
   },
   "dependencies": {
-    "bpmn-visualization": "0.27.1",
+    "bpmn-visualization": "0.39.0",
     "spectre.css": "0.5.9",
     "tippy.js": "6.3.7"
   },
   "devDependencies": {
-    "vite": "~3.1.8"
+    "vite": "~3.2.7"
   }
 }
