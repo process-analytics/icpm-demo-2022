@@ -227,7 +227,6 @@ function addPopover(activityId, bpmnVisualization) {
   tippyInstance.popper.addEventListener("mouseover", (event) => {
     if (event.target.nodeName === "TD") {
       const selectedRow = event.target.parentElement;
-      selectedRow.style.backgroundColor = "lightgray"; 
       const activityName = selectedRow.firstElementChild.textContent;
       const activityId = getElementIdByName(activityName)
       //highlight activity
@@ -242,7 +241,6 @@ function addPopover(activityId, bpmnVisualization) {
   tippyInstance.popper.addEventListener("mouseout", (event) => {
     if (event.target.nodeName === "TD") {
       const selectedRow = event.target.parentElement;
-      selectedRow.style.backgroundColor = "";
       const activityName = selectedRow.firstElementChild.textContent;
       const activityId = getElementIdByName(activityName)
       //highlight activity
@@ -280,7 +278,7 @@ function getContent(htmlElement) {
       </tr>`
   
   for (let key in activityComplianceData) {
-    popoverData += `<tr>
+    popoverData += `<tr class="popover-row">
                       <td>${key}</td>
                       <td>${activityComplianceData[key]["nbViolations"]}</td>
                       <td>${activityComplianceData[key]["percentTraces"]}</td>
