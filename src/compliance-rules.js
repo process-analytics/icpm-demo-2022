@@ -221,38 +221,73 @@ function addPopover(activityId, bpmnVisualization) {
     delay: [200, 400],
 
     trigger: "click",
-  });
-
-  // Add mouseover and mouseout event listeners to the table rows
-  tippyInstance.popper.addEventListener("mouseover", (event) => {
-    if (event.target.nodeName === "TD") {
-      const selectedRow = event.target.parentElement;
-      const activityName = selectedRow.firstElementChild.textContent;
-      const activityId = getElementIdByName(activityName)
-      //highlight activity
-      bpmnVisualization.bpmnElementsRegistry.addCssClasses(activityId, "cause-violation")
-      // workaround for https://github.com/process-analytics/icpm-demo-2022/issues/87
-      if(complianceData.has(activityName)){
-        addRippleCircles(activityId, bpmnVisualization)
-      }
-    }
-  });
-
-  tippyInstance.popper.addEventListener("mouseout", (event) => {
-    if (event.target.nodeName === "TD") {
-      const selectedRow = event.target.parentElement;
-      const activityName = selectedRow.firstElementChild.textContent;
-      const activityId = getElementIdByName(activityName)
-      //highlight activity
-      bpmnVisualization.bpmnElementsRegistry.removeCssClasses(activityId, "cause-violation")
-      // workaround for https://github.com/process-analytics/icpm-demo-2022/issues/87
-      if(complianceData.has(activityName)){
-        addRippleCircles(activityId, bpmnVisualization)
-      }
-    }
+    onShown(instance) {
+      registerEventListeners(instance, bpmnVisualization);
+    },
+    onHide(instance) {
+      unregisterEventListeners(instance, bpmnVisualization);
+    },
   });
 
   tippyInstances.push(tippyInstance);
+}
+
+function registerEventListeners(instance, bpmnVisualization){
+  manageEventListeners(instance, bpmnVisualization, true);
+}
+
+function unregisterEventListeners(instance, bpmnVisualization){
+  manageEventListeners(instance,bpmnVisualization,false);
+}
+
+function manageEventListeners(instance, bpmnVisualization, register){
+  // Target instance.popper. Keep using document for now as the previous popper (when going back to the subprocess after a first venue)
+  // may still exist in the DOM of the subprocess view
+  const rows = document.querySelectorAll(`#${instance.popper.id} #popover-non-compliant > tbody > tr`);
+  for (const row of rows) {
+    const activityName = row.firstElementChild.textContent;
+    const activityId = getElementIdByName(activityName);
+
+    // Register listeners
+    if(register){
+      row.addEventListener('mouseenter', function(event) {
+        getRowMouseEnterListener(event, activityId, bpmnVisualization);
+      });
+      row.addEventListener('mouseleave', function(event) {
+        getRowMouseLeaveListener(event, activityId, bpmnVisualization);
+      });
+    }
+
+    // Unregister listeners
+    else{
+      row.removeEventListener('mouseenter', function(event) {
+        getRowMouseEnterListener(event, activityId, bpmnVisualization);
+      });
+      row.removeEventListener('mouseleave', function(event) {
+        getRowMouseLeaveListener(event, activityId, bpmnVisualization);
+      });
+    }
+  }
+}
+
+function getRowMouseEnterListener(event, activityId, bpmnVisualization){
+  // Highlight activity
+  bpmnVisualization.bpmnElementsRegistry.addCssClasses(activityId, "cause-violation")
+  // workaround for https://github.com/process-analytics/icpm-demo-2022/issues/87
+  const activityName = bpmnVisualization.bpmnElementsRegistry.getElementsByIds(activityId)[0].bpmnSemantic.name;
+  if(complianceData.has(activityName)){
+    addRippleCircles(activityId, bpmnVisualization)
+  }
+}
+
+function getRowMouseLeaveListener(event, activityId, bpmnVisualization){
+  // Reset highlight
+  bpmnVisualization.bpmnElementsRegistry.removeCssClasses(activityId, "cause-violation")
+  // workaround for https://github.com/process-analytics/icpm-demo-2022/issues/87
+  const activityName = bpmnVisualization.bpmnElementsRegistry.getElementsByIds(activityId)[0].bpmnSemantic.name;
+  if(complianceData.has(activityName)){
+    addRippleCircles(activityId, bpmnVisualization)
+  }
 }
 
 // TODO refactor as we have several needs (content by bpmnSemantic.id, bpmnSemantic.id to then call the bpmn-visualization API)
@@ -270,12 +305,15 @@ function getContent(htmlElement) {
   const activityComplianceData = getActivityComplianceData(bpmnSemantic.name)
   let popoverData = `<div class="bpmn-popover">
     <b style="color:white">Precedence Rule Violation info:</b>
-    <table border="1" bordercolor="white"  style="text-align:center; border-collapse:collapse;">
-      <tr style="color:white">
-        <th>Preceding activity</th>
-        <th>#violations</th>
-        <th>%traces</th>
-      </tr>`
+    <table id="popover-non-compliant" border="1" bordercolor="white"  style="text-align:center; border-collapse:collapse;">
+      <thead>
+        <tr style="color:white">
+          <th>Preceding activity</th>
+          <th>#violations</th>
+          <th>%traces</th>
+        </tr>
+      </thead>
+      <tbody>`
   
   for (let key in activityComplianceData) {
     popoverData += `<tr class="popover-row">
@@ -284,7 +322,7 @@ function getContent(htmlElement) {
                       <td>${activityComplianceData[key]["percentTraces"]}</td>
                     </tr>`
   }
-  popoverData += `</table></div>`
+  popoverData += `</tbody></table></div>`
   return popoverData
 }
 
