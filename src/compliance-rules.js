@@ -241,8 +241,6 @@ function unregisterEventListeners(instance, bpmnVisualization){
 }
 
 function manageEventListeners(instance, bpmnVisualization, register){
-  // Target instance.popper. Keep using document for now as the previous popper (when going back to the subprocess after a first venue)
-  // may still exist in the DOM of the subprocess view
   const rows = document.querySelectorAll(`#${instance.popper.id} #popover-non-compliant > tbody > tr`);
   for (const row of rows) {
     const activityName = row.firstElementChild.textContent;
