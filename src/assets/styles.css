@@ -81,6 +81,17 @@ footer {
   }
 }
 
+/* highlight root cause violations */
+.bpmn-type-activity.cause-violation > rect {
+  stroke: red;
+  filter: drop-shadow(0 0 0.75rem red);
+}
+
+/* Interaction on the non-compliant popover table rows */
+tr.popover-row:hover {
+  background-color: lightgray;
+}
+
 /* ****************************************************************************************************************** */
 /* Use case: Happy path */
 /* ****************************************************************************************************************** */
