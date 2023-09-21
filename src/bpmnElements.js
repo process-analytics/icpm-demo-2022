@@ -33,3 +33,13 @@ export function isGateway(elementId) {
 export function isEvent(elementId) {
     return eventsMap.has(elementId);
 }
+
+export function getElementIdByName(elementName){
+    let id = null;
+    activitiesMap.forEach((value, key) => {
+        if (value === elementName) {
+            id = key;
+        }
+    });
+    return id;
+}
