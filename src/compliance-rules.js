@@ -1,5 +1,7 @@
 import tippy, {sticky} from "tippy.js";
 import "tippy.js/dist/tippy.css";
+import { getElementIdByName } from "./bpmnElements";
+import { getComplianceData, getActivityComplianceData } from "./complianceData";
 
 const tippyInstances = [];
 
@@ -50,11 +52,14 @@ const complianceRulesCssClassnames = [
   "c-hand" // Set the cursor to mark the elements as clickable
 ];
 
+const complianceData = getComplianceData()
+
 /**
  * @param {BpmnVisualization} bpmnVisualization
  */
 export function showComplianceRules(bpmnVisualization) {
-  const activities = ["Activity_0yabbur", "Activity_1u4jwkv"];
+  const activityNames = Array.from(complianceData.keys());
+  const activities = activityNames.map((activityName) => {return getElementIdByName(activityName)})
   // this must be called first, prior adding ripple circles (which is managed by making custom svg manipulation) as mxGraph will repaint the elements
   bpmnVisualization.bpmnElementsRegistry.addCssClasses(activities, complianceRulesCssClassnames);
 
@@ -216,9 +221,71 @@ function addPopover(activityId, bpmnVisualization) {
     delay: [200, 400],
 
     trigger: "click",
+    onShown(instance) {
+      registerEventListeners(instance, bpmnVisualization);
+    },
+    onHide(instance) {
+      unregisterEventListeners(instance, bpmnVisualization);
+    },
   });
 
   tippyInstances.push(tippyInstance);
+}
+
+function registerEventListeners(instance, bpmnVisualization){
+  manageEventListeners(instance, bpmnVisualization, true);
+}
+
+function unregisterEventListeners(instance, bpmnVisualization){
+  manageEventListeners(instance,bpmnVisualization,false);
+}
+
+function manageEventListeners(instance, bpmnVisualization, register){
+  const rows = document.querySelectorAll(`#${instance.popper.id} #popover-non-compliant > tbody > tr`);
+  for (const row of rows) {
+    const activityName = row.firstElementChild.textContent;
+    const activityId = getElementIdByName(activityName);
+
+    // Register listeners
+    if(register){
+      row.addEventListener('mouseenter', function(event) {
+        getRowMouseEnterListener(event, activityId, bpmnVisualization);
+      });
+      row.addEventListener('mouseleave', function(event) {
+        getRowMouseLeaveListener(event, activityId, bpmnVisualization);
+      });
+    }
+
+    // Unregister listeners
+    else{
+      row.removeEventListener('mouseenter', function(event) {
+        getRowMouseEnterListener(event, activityId, bpmnVisualization);
+      });
+      row.removeEventListener('mouseleave', function(event) {
+        getRowMouseLeaveListener(event, activityId, bpmnVisualization);
+      });
+    }
+  }
+}
+
+function getRowMouseEnterListener(event, activityId, bpmnVisualization){
+  // Highlight activity
+  bpmnVisualization.bpmnElementsRegistry.addCssClasses(activityId, "cause-violation")
+  // workaround for https://github.com/process-analytics/icpm-demo-2022/issues/87
+  const activityName = bpmnVisualization.bpmnElementsRegistry.getElementsByIds(activityId)[0].bpmnSemantic.name;
+  if(complianceData.has(activityName)){
+    addRippleCircles(activityId, bpmnVisualization)
+  }
+}
+
+function getRowMouseLeaveListener(event, activityId, bpmnVisualization){
+  // Reset highlight
+  bpmnVisualization.bpmnElementsRegistry.removeCssClasses(activityId, "cause-violation")
+  // workaround for https://github.com/process-analytics/icpm-demo-2022/issues/87
+  const activityName = bpmnVisualization.bpmnElementsRegistry.getElementsByIds(activityId)[0].bpmnSemantic.name;
+  if(complianceData.has(activityName)){
+    addRippleCircles(activityId, bpmnVisualization)
+  }
 }
 
 // TODO refactor as we have several needs (content by bpmnSemantic.id, bpmnSemantic.id to then call the bpmn-visualization API)
@@ -233,44 +300,28 @@ function registerBpmnElement(bpmnElement) {
 
 function getContent(htmlElement) {
   const bpmnSemantic = registeredBpmnElements.get(htmlElement);
-  if (bpmnSemantic.id === "Activity_0yabbur") {
-    return `<div class="bpmn-popover">
+  const activityComplianceData = getActivityComplianceData(bpmnSemantic.name)
+  let popoverData = `<div class="bpmn-popover">
     <b style="color:white">Precedence Rule Violation info:</b>
-    <table border="1" bordercolor="white"  style="text-align:center; border-collapse:collapse;">
-  <tr style="color:white">
-    <th>Preceding activity</th>
-    <th>#violations</th>
-    <th>%traces</th>
-  </tr>
-  <tr>
-    <td>Record Goods Receipt</td>
-    <td>31</td>
-    <td>5.80</td>
-  </tr>
-  <tr>
-  <td>Record Invoice Receipt</td>
-  <td>3</td>
-  <td>0.67</td>
-</tr>
-</table>
-    </div>`;
-  } else if (bpmnSemantic.id === "Activity_1u4jwkv") {
-    return `<div class="bpmn-popover">
-    <b style="color:white">Precedence Rule Violation info:</b>
-    <table border="1" bordercolor="white"  style="text-align:center; border-collapse:collapse;">
-  <tr style="color:white">
-    <th>Preceding activity</th>
-    <th>#violations</th>
-    <th>%traces</th>
-  </tr>
-  <tr>
-    <td>Record Goods Receipt</td>
-    <td>55</td>
-    <td>6.88</td>
-  </tr>
-</table>
-    </div>`;
+    <table id="popover-non-compliant" border="1" bordercolor="white"  style="text-align:center; border-collapse:collapse;">
+      <thead>
+        <tr style="color:white">
+          <th>Preceding activity</th>
+          <th>#violations</th>
+          <th>%traces</th>
+        </tr>
+      </thead>
+      <tbody>`
+  
+  for (let key in activityComplianceData) {
+    popoverData += `<tr class="popover-row">
+                      <td>${key}</td>
+                      <td>${activityComplianceData[key]["nbViolations"]}</td>
+                      <td>${activityComplianceData[key]["percentTraces"]}</td>
+                    </tr>`
   }
+  popoverData += `</tbody></table></div>`
+  return popoverData
 }
 
 /**
