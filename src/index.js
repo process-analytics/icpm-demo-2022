@@ -1,4 +1,4 @@
-import { BpmnVisualization, FitType } from "bpmn-visualization";
+import {BpmnVisualization, FitType, getVersion} from "bpmn-visualization";
 
 import collapsedDiagram from "./diagrams/EC-purchase-orders-collapsed.bpmn?raw";
 import { configureRadioButtons } from "./radio-buttons";
@@ -30,5 +30,5 @@ configureRadioButtons(mainBpmnVisualization);
 
 // display the bpmn-visualization version in the footer
 const footer = document.querySelector("footer");
-const version = mainBpmnVisualization.getVersion();
+const version = getVersion();
 footer.innerText = `bpmn-visualization@${version.lib}`;
