@@ -1,5 +1,9 @@
 # The demo presented at ICPM 2022 
 
+| Archived on 2025-01-17 | We no longer maintain this repository. |
+| -------- | -------- |
+
+
 ## 🎮 The deployed solution
 
 To see the deployed solution: https://process-analytics.github.io/icpm-demo-2022/
